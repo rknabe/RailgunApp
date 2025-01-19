@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.ButtonsPanel">
+  <grid id="27dc6" binding="mainButtonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="726" height="60"/>
+    </constraints>
+    <properties>
+      <autoscrolls value="false"/>
+      <maximumSize width="400" height="60"/>
+      <minimumSize width="400" height="60"/>
+      <name value="mainButtonPanel"/>
+      <preferredSize width="400" height="60"/>
+      <requestFocusEnabled value="false"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="5f99" binding="topPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="North"/>
+        <properties>
+          <autoscrolls value="false"/>
+          <maximumSize width="200" height="60"/>
+          <minimumSize width="200" height="60"/>
+          <preferredSize width="200" height="60"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="1494e" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Buttons: "/>
+            </properties>
+          </component>
+          <component id="6b4a0" class="javax.swing.JButton" binding="button1">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <horizontalAlignment value="0"/>
+              <maximumSize width="78" height="78"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <selected value="false"/>
+              <text value="1"/>
+            </properties>
+          </component>
+          <component id="e6cb3" class="javax.swing.JButton" binding="button2">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <selected value="false"/>
+              <text value="2"/>
+            </properties>
+          </component>
+          <component id="891bb" class="javax.swing.JButton" binding="button3">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <rolloverEnabled value="false"/>
+              <selected value="false"/>
+              <text value="3"/>
+            </properties>
+          </component>
+          <component id="f66a3" class="javax.swing.JButton" binding="button4">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <rolloverEnabled value="false"/>
+              <selected value="false"/>
+              <text value="4"/>
+            </properties>
+          </component>
+          <component id="f48d9" class="javax.swing.JButton" binding="button5">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <rolloverEnabled value="false"/>
+              <selected value="false"/>
+              <text value="5"/>
+            </properties>
+          </component>
+          <component id="f92c8" class="javax.swing.JButton" binding="button6">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <rolloverEnabled value="false"/>
+              <selected value="false"/>
+              <text value="6"/>
+            </properties>
+          </component>
+          <component id="ea70a" class="javax.swing.JButton" binding="button7">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <rolloverEnabled value="false"/>
+              <selected value="false"/>
+              <text value="7"/>
+            </properties>
+          </component>
+          <component id="4a55b" class="javax.swing.JButton" binding="button8">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="false"/>
+              <minimumSize width="50" height="50"/>
+              <preferredSize width="50" height="50"/>
+              <rolloverEnabled value="false"/>
+              <selected value="false"/>
+              <text value="8"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

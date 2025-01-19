@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.MainForm">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="778" height="685"/>
+    </constraints>
+    <properties>
+      <minimumSize width="700" height="400"/>
+      <preferredSize width="700" height="700"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="f3ed9" binding="bottomPanel" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties>
+          <autoscrolls value="false"/>
+          <maximumSize width="1000" height="100"/>
+          <minimumSize width="700" height="83"/>
+          <preferredSize width="700" height="83"/>
+        </properties>
+        <border type="bevel-raised"/>
+        <children>
+          <grid id="6d238" binding="devicePanel" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="1">
+            <constraints/>
+            <properties>
+              <minimumSize width="780" height="40"/>
+              <preferredSize width="780" height="40"/>
+              <verifyInputWhenFocusTarget value="false"/>
+            </properties>
+            <border type="etched"/>
+            <children>
+              <component id="d1d5f" class="javax.swing.JComboBox" binding="deviceList">
+                <constraints/>
+                <properties>
+                  <actionCommand value="deviceListChanged"/>
+                  <minimumSize width="200" height="34"/>
+                  <preferredSize width="200" height="34"/>
+                </properties>
+              </component>
+              <component id="e1af6" class="javax.swing.JButton" binding="btnConnect">
+                <constraints/>
+                <properties>
+                  <maximumSize width="95" height="34"/>
+                  <minimumSize width="95" height="34"/>
+                  <preferredSize width="95" height="34"/>
+                  <text value="Connect"/>
+                </properties>
+              </component>
+              <component id="ea116" class="javax.swing.JLabel" binding="statusLabel">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <focusable value="false"/>
+                  <horizontalAlignment value="2"/>
+                  <minimumSize width="165" height="20"/>
+                  <preferredSize width="165" height="20"/>
+                  <requestFocusEnabled value="true"/>
+                  <text value="Scanning..."/>
+                </properties>
+              </component>
+              <component id="bcaa2" class="javax.swing.JLabel" binding="firmwareLabel">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <focusable value="false"/>
+                  <horizontalAlignment value="0"/>
+                  <maximumSize width="110" height="20"/>
+                  <minimumSize width="110" height="20"/>
+                  <preferredSize width="110" height="20"/>
+                  <text value="Firmware:"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <component id="21199" class="javax.swing.JButton" binding="defaultsButton">
+            <constraints/>
+            <properties>
+              <actionCommand value="resetDefaults"/>
+              <horizontalAlignment value="0"/>
+              <maximumSize width="196" height="30"/>
+              <minimumSize width="196" height="30"/>
+              <preferredSize width="196" height="30"/>
+              <text value="Reset Settings to Defaults"/>
+            </properties>
+          </component>
+          <component id="6479" class="javax.swing.JButton" binding="loadButton">
+            <constraints/>
+            <properties>
+              <actionCommand value="loadEEPROM"/>
+              <maximumSize width="196" height="30"/>
+              <minimumSize width="196" height="30"/>
+              <preferredSize width="196" height="30"/>
+              <text value="Load Settings From EEPROM"/>
+            </properties>
+          </component>
+          <component id="8a62f" class="javax.swing.JButton" binding="saveButton">
+            <constraints/>
+            <properties>
+              <actionCommand value="saveSettings"/>
+              <horizontalAlignment value="0"/>
+              <maximumSize width="196" height="30"/>
+              <minimumSize width="196" height="30"/>
+              <preferredSize width="196" height="30"/>
+              <text value="Save Settings to EEPROM"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="d7650" binding="northPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties>
+          <minimumSize width="400" height="600"/>
+          <preferredSize width="400" height="600"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="c158b" binding="axisPanelParent" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <autoscrolls value="false"/>
+            </properties>
+            <border type="bevel-lowered"/>
+            <children>
+              <grid id="a1a7d" binding="settingsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="South"/>
+                <properties>
+                  <minimumSize width="736" height="50"/>
+                  <preferredSize width="736" height="50"/>
+                </properties>
+                <border type="bevel-raised"/>
+                <children>
+                  <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="85" height="34"/>
+                      <minimumSize width="85" height="34"/>
+                      <preferredSize width="85" height="34"/>
+                      <text value="Calibrate"/>
+                    </properties>
+                  </component>
+                  <hspacer id="d9c7b">
+                    <constraints/>
+                  </hspacer>
+                  <component id="80905" class="javax.swing.JCheckBox" binding="cbAutoRecoil">
+                    <constraints/>
+                    <properties>
+                      <alignmentX value="0.0"/>
+                      <horizontalAlignment value="4"/>
+                      <margin top="2" left="2" bottom="2" right="2"/>
+                      <text value="Auto Recoil"/>
+                    </properties>
+                  </component>
+                  <hspacer id="874a9">
+                    <constraints/>
+                  </hspacer>
+                  <component id="ddae9" class="javax.swing.JLabel" binding="lblAutoTrigger">
+                    <constraints/>
+                    <properties>
+                      <labelFor value="56456"/>
+                      <text value="Auto-Trigger Speed (ms)"/>
+                      <toolTipText value="When &gt; 0, Holding the trigger will repeat trigger"/>
+                    </properties>
+                  </component>
+                  <component id="56456" class="javax.swing.JSpinner" binding="spAutoTriggerSpeed">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <maximumSize width="80" height="34"/>
+                      <minimumSize width="80" height="34"/>
+                      <name value=""/>
+                      <preferredSize width="80" height="34"/>
+                    </properties>
+                  </component>
+                  <hspacer id="7ddb">
+                    <constraints/>
+                  </hspacer>
+                  <component id="b86a9" class="javax.swing.JLabel" binding="lblTriggerHold">
+                    <constraints/>
+                    <properties>
+                      <labelFor value="4827b"/>
+                      <text value="Auto-Trigger Hold (ms)"/>
+                      <toolTipText value="When &gt; 0, Holding the trigger will repeat trigger"/>
+                    </properties>
+                  </component>
+                  <component id="4827b" class="javax.swing.JSpinner" binding="spTriggerHold">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <maximumSize width="80" height="34"/>
+                      <minimumSize width="80" height="34"/>
+                      <name value=""/>
+                      <preferredSize width="80" height="34"/>
+                      <toolTipText value="Amount of time to hold trigger for auto-fire, if zero, auto-fire disabled"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <nested-form id="63a6a" form-file="com/rkade/ButtonsPanel.form" binding="buttonsPanel">
+            <constraints border-constraint="South"/>
+          </nested-form>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
