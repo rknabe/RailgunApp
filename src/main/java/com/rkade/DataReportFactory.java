@@ -21,8 +21,8 @@ public abstract class DataReportFactory {
                 reports.add(new SettingsDataReport(reportType, buffer));
             } else {
                 //these have to go in the correct order because they read sequentially from same data structure
-                reports.add(new ButtonsDataReport(reportType, buffer));
                 reports.add(new AxisDataReport(reportType, buffer));
+                reports.add(new ButtonsDataReport(reportType, buffer));
                 //reports.add(new GunDataReport(reportType, buffer));
             }
 
