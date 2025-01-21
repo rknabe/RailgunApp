@@ -3,19 +3,18 @@ package com.rkade;
 import java.nio.ByteBuffer;
 
 public final class AxisDataReport extends DataReport {
-    private final short x;
-    private final short y;
-    private final int axis;
+    private final byte x;
+    private final byte y;
 
     public AxisDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
-        axis = 0;
-        x = buffer.getShort();
-        y = buffer.getShort();
-    }
-
-    public int getAxis() {
-        return axis;
+        x = buffer.get();
+        y = buffer.get();
+        buffer.get();
+        buffer.get();
+        buffer.get();
+        buffer.get();
+        buffer.get();
     }
 
     public short getX() {

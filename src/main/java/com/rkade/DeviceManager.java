@@ -153,8 +153,6 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     public void getOutputReport(HidDevice hidDevice, byte dataType, byte dataIndex, byte[] data) throws IOException {
         data[0] = dataType;
         data[1] = dataIndex;
-        data[2] = 16;
-        data[3] = 15;
         int ret = hidDevice.setOutputReport((byte) 6, data, 64);
         if (ret <= 0) {
             throw new IOException("Device returned error for dataType:" + dataType + " dataIndex:" + dataIndex);
@@ -164,8 +162,6 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     public void getFeatureReport(HidDevice hidDevice, byte dataType, byte dataIndex, byte[] data) throws IOException {
         data[0] = dataType;
         data[1] = dataIndex;
-        data[2] = 16;
-        data[3] = 15;
         int ret = hidDevice.getFeatureReport((byte) 6, data, 64);
         if (ret <= 0) {
             throw new IOException("Device returned error for dataType:" + dataType + " dataIndex:" + dataIndex);
@@ -219,12 +215,20 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                 if (openedDevice != null) {
                     openedDevice.open();
                     openedDevice.setInputReportListener(DeviceManager.this);
-                    connectDevice(getDevice(openedDevice));
-                    getFeatureReport(openedDevice, (byte) 9, (byte) 0, reportData);
+                    //openedDevice.setDeviceRemovalListener(DeviceManager.this);
+                    Device device = getDevice(openedDevice);
+                    //notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
+                    //notifyListenersDeviceAttached(device);
+                    connectDevice(device);
                     sleep(50);
-                    getOutputReport(openedDevice, (byte) 7, (byte) 0, reportData);
+                    getFeatureReport(openedDevice, (byte) 1, (byte) 0, reportData);
                     sleep(50);
-                    setFeatureReport(openedDevice, (byte) 8, (byte) 0, reportData);
+                    //getOutputReport(openedDevice, (byte) 2, (byte) 0, reportData);
+                    //sleep(50);
+                    setFeatureReport(openedDevice, (byte) 1, (byte) 0, reportData);
+                    sleep(50);
+                    //openedDevice.getInputReportDescriptor(reportData, 64);
+                    //sleep(50);
                 }
             } catch (Exception ex) {
                 logger.warning(ex.getMessage());

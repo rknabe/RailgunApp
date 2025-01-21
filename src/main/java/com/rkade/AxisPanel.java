@@ -9,16 +9,16 @@ import java.awt.event.ActionListener;
 
 public class AxisPanel extends JPanel implements DeviceListener, ActionListener, ChangeListener {
     private final Image target;
-    private short xAxisMinimum = Short.MIN_VALUE;
-    private short xAxisMaximum = Short.MAX_VALUE;
-    private short yAxisMinimum = Short.MIN_VALUE;
-    private short yAxisMaximum = Short.MAX_VALUE;
+    private short xAxisMinimum = Byte.MIN_VALUE;
+    private short xAxisMaximum = Byte.MAX_VALUE;
+    private short yAxisMinimum = Byte.MIN_VALUE;
+    private short yAxisMaximum = Byte.MAX_VALUE;
     private short x = 0, y = 0;
     private boolean isCalibrating = false;
-    private short xMax = Short.MAX_VALUE;
-    private short xMin = Short.MIN_VALUE;
-    private short yMax = Short.MAX_VALUE;
-    private short yMin = Short.MIN_VALUE;
+    private short xMax = Byte.MAX_VALUE;
+    private short xMin = Byte.MIN_VALUE;
+    private short yMax = Byte.MAX_VALUE;
+    private short yMin = Byte.MIN_VALUE;
     private int targetWidth = 0;
     private int targetHeight = 0;
 
