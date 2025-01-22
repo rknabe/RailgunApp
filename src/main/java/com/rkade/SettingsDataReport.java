@@ -15,17 +15,26 @@ public final class SettingsDataReport extends DataReport {
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
-        byte cmd = buffer.get();
-        short args = buffer.getShort();
+        /*
+        char id[10];
+        char ver[6];
+        int8_t xAxisMinimum;
+        int8_t xAxisMaximum;
+        int8_t yAxisMinimum;
+        int8_t yAxisMaximum;
+        int16_t triggerRepeatRate;
+        int16_t triggerHoldTime;
+        bool autoRecoil;
+        */
         deviceType = getString(buffer, 10).trim();
         deviceVersion = getString(buffer, 6).trim();
-        xAxisMinimum = buffer.getShort();
-        xAxisMaximum = buffer.getShort();
-        yAxisMinimum = buffer.getShort();
-        yAxisMaximum = buffer.getShort();
-        autoRecoil = buffer.get() > 0;
+        xAxisMinimum = buffer.get();
+        xAxisMaximum = buffer.get();
+        yAxisMinimum = buffer.get();
+        yAxisMaximum = buffer.get();
         triggerRepeatDelay = buffer.getShort();
         triggerHoldTime = buffer.getShort();
+        autoRecoil = buffer.get() > 0;
     }
 
     public short getTriggerHoldTime() {

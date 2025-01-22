@@ -13,8 +13,9 @@ public class Device {
     public static final byte CMD_REPORT_ID = 15;
     public static final byte DATA_REPORT_ID = 1;
     public static final byte DATA_REPORT_VALUE_COUNT = 31;
-    public static final byte CMD_GET_VER = 16;
-    public static final byte CMD_GET_SETTINGS = 1;
+    public static final byte CMD_GET_FEATURE = 2;
+    public static final byte CMD_GET_STATE = 3;
+    public static final byte CMD_VENDOR = 6;
     public static final byte CMD_HEARTBEAT = 0;
     public static final byte CMD_SET_AUTO_RECOIL = 3;
     public static final byte CMD_SET_TRIGGER_RATE = 4;

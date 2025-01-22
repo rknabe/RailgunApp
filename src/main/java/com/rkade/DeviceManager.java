@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public final class DeviceManager implements InputReportListener, DeviceRemovalListener {
     private final static Logger logger = Logger.getLogger(DeviceManager.class.getName());
-    private final static int LEONARDO_VENDOR_ID =0x303A;// 0x2341;
+    private final static int LEONARDO_VENDOR_ID = 0x303A;// 0x2341;
     private final static int LEONARDO_PRODUCT_ID = 0x8234;//0x8036;
     private final static int OUTPUT_REPORT_DATA_LENGTH = 9;
     private final static List<DeviceListener> deviceListeners = Collections.synchronizedList(new ArrayList<>());
@@ -91,8 +91,9 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
 
     @Override
     public void onInputReport(HidDevice hidDevice, byte id, byte[] data, int len) {
-        if (id == 6 || id == Device.DATA_REPORT_ID || id == Device.CMD_GET_VER) {
-            List<DataReport> reports = DataReportFactory.create(id, data);
+        if (id == Device.CMD_VENDOR) {
+            byte dataType = data[0];
+            List<DataReport> reports = DataReportFactory.create(dataType, data);
             Device device = getDevice(hidDevice);
             for (DataReport report : reports) {
                 if (report instanceof SettingsDataReport settings) {
@@ -122,6 +123,8 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                     notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
                 }
             }
+        } else {
+            logger.warning("Got unexpected reported type:" + id);
         }
     }
 
@@ -153,15 +156,13 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     public void getOutputReport(HidDevice hidDevice, byte dataType, byte dataIndex, byte[] data) throws IOException {
         data[0] = dataType;
         data[1] = dataIndex;
-        int ret = hidDevice.setOutputReport((byte) 6, data, 64);
+        int ret = hidDevice.setOutputReport((byte) Device.CMD_GET_FEATURE, data, 64);
         if (ret <= 0) {
             throw new IOException("Device returned error for dataType:" + dataType + " dataIndex:" + dataIndex);
         }
     }
 
     public void getFeatureReport(HidDevice hidDevice, byte dataType, byte dataIndex, byte[] data) throws IOException {
-        data[0] = dataType;
-        data[1] = dataIndex;
         int ret = hidDevice.getFeatureReport((byte) 6, data, 64);
         if (ret <= 0) {
             throw new IOException("Device returned error for dataType:" + dataType + " dataIndex:" + dataIndex);
@@ -169,7 +170,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     }
 
     public void setFeatureReport(HidDevice hidDevice, byte dataType, byte dataIndex, byte[] data) throws IOException {
-        data[0] = dataType;
+        data[0] = 1;
         data[1] = dataIndex;
         data[2] = 16;
         data[3] = 15;
@@ -215,18 +216,18 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                 if (openedDevice != null) {
                     openedDevice.open();
                     openedDevice.setInputReportListener(DeviceManager.this);
-                    //openedDevice.setDeviceRemovalListener(DeviceManager.this);
                     Device device = getDevice(openedDevice);
-                    //notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
-                    //notifyListenersDeviceAttached(device);
+                    openedDevice.setDeviceRemovalListener(DeviceManager.this);
+                    notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
+                    notifyListenersDeviceAttached(device);
                     connectDevice(device);
                     sleep(50);
-                    getFeatureReport(openedDevice, (byte) 1, (byte) 0, reportData);
+                    getFeatureReport(openedDevice, (byte) Device.CMD_GET_FEATURE, (byte) 0, reportData);
                     sleep(50);
                     //getOutputReport(openedDevice, (byte) 2, (byte) 0, reportData);
                     //sleep(50);
-                    setFeatureReport(openedDevice, (byte) 1, (byte) 0, reportData);
-                    sleep(50);
+                    //setFeatureReport(openedDevice, (byte) 1, (byte) 0, reportData);
+                    //sleep(50);
                     //openedDevice.getInputReportDescriptor(reportData, 64);
                     //sleep(50);
                 }

@@ -9,15 +9,13 @@ public abstract class DataReportFactory {
 
     public static List<DataReport> create(byte reportType, byte[] data) {
         List<DataReport> reports = new ArrayList<>();
-        if (reportType == 6 || reportType == Device.DATA_REPORT_ID || reportType == Device.CMD_GET_VER) {
+        if (reportType == Device.CMD_GET_STATE || reportType == Device.CMD_GET_FEATURE) {
             ByteBuffer buffer = ByteBuffer.allocate(data.length).order(ByteOrder.LITTLE_ENDIAN);
             buffer.put(data);
             buffer.rewind();
-            //byte reportIndex = buffer.get();
-            //short section = buffer.getShort();
-            //short section = 0;
+            byte type = buffer.get(); //read past the data type first byte
 
-            if (reportType == Device.CMD_GET_VER) {
+            if (reportType == Device.CMD_GET_FEATURE) {
                 reports.add(new SettingsDataReport(reportType, buffer));
             } else {
                 //these have to go in the correct order because they read sequentially from same data structure
