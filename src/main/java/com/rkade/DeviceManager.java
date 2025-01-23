@@ -99,6 +99,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                 if (report instanceof SettingsDataReport settings) {
                     SettingsDataReport prevSettings = deviceSettings.get(device);
                     if (prevSettings != null) {//not first pass
+                        notifyListenersDeviceUpdated(device, null, settings);
                         continue;
                     }
                     deviceSettings.put(device, settings);
