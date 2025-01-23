@@ -220,7 +220,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                     openedDevice.setDeviceRemovalListener(DeviceManager.this);
                     notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
                     notifyListenersDeviceAttached(device);
-                    connectDevice(device);
+                    //connectDevice(device);
                     sleep(50);
                     getFeatureReport(openedDevice, (byte) Device.CMD_GET_FEATURE, (byte) 0, reportData);
                     sleep(50);

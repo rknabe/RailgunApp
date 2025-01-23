@@ -115,43 +115,37 @@ public class Device {
     }
 
     private boolean sendCommand(byte command) {
-        return sendCommand(command, (short) 0, (short) 0, (short) 0);
+        return sendCommand(command, (short) 0, (short) 0, (short) 0, (short) 0);
     }
 
     private boolean sendCommand(byte command, boolean state) {
-        return sendCommand(command, (short) (state ? 1 : 0), (short) 0);
+        return sendCommand(command, (short) (state ? 1 : 0), (short) 0, (short) 0, (short) 0);
     }
 
     private boolean sendCommand(byte command, short arg1) {
-        return sendCommand(command, arg1, (short) 0, (short) 0);
-    }
-
-    private boolean sendCommand(byte command, short arg1, short arg2) {
-        return sendCommand(command, arg1, arg2, (short) 0);
-    }
-
-    private boolean sendCommand(byte command, short arg1, short arg2, short arg3) {
-        return sendCommand(command, arg1, arg2, arg3, (short) 0);
+        return sendCommand(command, arg1, (short) 0, (short) 0, (short) 0);
     }
 
     private boolean sendCommand(byte command, short arg1, short arg2, short arg3, short arg4) {
-        byte[] data = new byte[9];
-        data[0] = command;
-        data[1] = getFirstByte(arg1);
-        data[2] = getSecondByte(arg1);
+        byte[] data = new byte[10];
+        data[0] = Device.CMD_VENDOR;
+        data[1] = command;
 
-        data[3] = getFirstByte(arg2);
-        data[4] = getSecondByte(arg2);
+        data[2] = getFirstByte(arg1);
+        data[3] = getSecondByte(arg1);
 
-        data[5] = getFirstByte(arg3);
-        data[6] = getSecondByte(arg3);
+        data[4] = getFirstByte(arg2);
+        data[5] = getSecondByte(arg2);
 
-        data[7] = getFirstByte(arg4);
-        data[8] = getSecondByte(arg4);
+        data[6] = getFirstByte(arg3);
+        data[7] = getSecondByte(arg3);
 
-        int ret = hidDevice.setOutputReport(CMD_REPORT_ID, data, 9);
+        data[8] = getFirstByte(arg4);
+        data[9] = getSecondByte(arg4);
+
+        int ret = hidDevice.setFeatureReport(Device.CMD_VENDOR, data, 10);
         if (ret <= 0) {
-            logger.severe("Device returned error on Save:" + ret);
+            logger.severe("Device returned error on setFeatureReport:" + ret);
             return false;
         }
         return true;
