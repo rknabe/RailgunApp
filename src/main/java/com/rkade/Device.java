@@ -17,11 +17,12 @@ public class Device {
     public static final byte CMD_GET_STATE = 3;
     public static final byte CMD_VENDOR = 6;
     public static final byte CMD_HEARTBEAT = 0;
+    public static final byte CMD_SET_AXIS_LIMITS = 2;
     public static final byte CMD_SET_AUTO_RECOIL = 3;
     public static final byte CMD_SET_TRIGGER_RATE = 4;
     public static final byte CMD_SET_TRIGGER_HOLD = 5;
     public static final byte CMD_SET_UNIQUE_ID = 6;
-    public static final byte CMD_SET_AXIS_LIMITS = 2;
+    public static final byte CMD_SET_AMMO_COUNT = 7;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
