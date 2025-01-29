@@ -61,7 +61,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         triggerSpeedFormatter.setCommitsOnValidEdit(true);
         spAutoTriggerSpeed.setEditor(triggerSpeedEditor);
 
-        SpinnerNumberModel triggerHoldModel = new SpinnerNumberModel(200, 0, 3000, 10);
+        SpinnerNumberModel triggerHoldModel = new SpinnerNumberModel(500, 0, 5000, 10);
         spTriggerHold.setModel(triggerHoldModel);
         JSpinner.NumberEditor triggerHoldEditor = new JSpinner.NumberEditor(spTriggerHold, "#");
         JFormattedTextField triggerHoldField = triggerHoldEditor.getTextField();
@@ -229,8 +229,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
                     axisPanel.setYAxisMaximum(settings.getYAxisMaximum());
                     cbAutoRecoil.setSelected(settings.isAutoRecoil());
-                    spAutoTriggerSpeed.setValue(settings.getTriggerRepeatDelay());
-                    spTriggerHold.setValue(settings.getTriggerHoldTime());
+                    spAutoTriggerSpeed.getModel().setValue(settings.getTriggerRepeatDelay());
+                    spTriggerHold.getModel().setValue(settings.getTriggerHoldTime());
                 }
                 case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
                 //case GunDataReport gunData -> ammoText.setText(String.valueOf(gunData.getAmmoCount()));

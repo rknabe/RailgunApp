@@ -12,6 +12,7 @@ public final class SettingsDataReport extends DataReport {
     private final boolean autoRecoil;
     private final short triggerRepeatDelay;
     private final short triggerHoldTime;
+    private final boolean useDisplay;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -35,6 +36,7 @@ public final class SettingsDataReport extends DataReport {
         triggerRepeatDelay = buffer.getShort();
         triggerHoldTime = buffer.getShort();
         autoRecoil = buffer.get() > 0;
+        useDisplay= buffer.get() > 0;
     }
 
     public short getTriggerHoldTime() {
