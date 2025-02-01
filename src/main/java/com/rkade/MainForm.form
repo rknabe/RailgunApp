@@ -55,7 +55,7 @@
                   <minimumSize width="165" height="20"/>
                   <preferredSize width="165" height="20"/>
                   <requestFocusEnabled value="true"/>
-                  <text value="Scanning..."/>
+                  <text value="Scanning...."/>
                 </properties>
               </component>
               <component id="bcaa2" class="javax.swing.JLabel" binding="firmwareLabel">

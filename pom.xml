@@ -4,7 +4,7 @@
 
     <groupId>com.rkade</groupId>
     <artifactId>RKadeGunConfig</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.1.0.0</version>
     <packaging>jar</packaging>
     <description>RKADE Gun Configuration Utility</description>
     <name>RKadeGunConfig</name>
@@ -35,11 +35,6 @@
             <groupId>com.github.umjammer</groupId>
             <artifactId>purejavahidapi</artifactId>
             <version>0.0.18v</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-cli</groupId>
-            <artifactId>commons-cli</artifactId>
-            <version>1.9.0</version>
         </dependency>
         <dependency>
             <groupId>com.fazecast</groupId>
@@ -90,7 +85,7 @@
             <plugin>
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>
                 <artifactId>launch4j-maven-plugin</artifactId>
-                <version>2.5.2</version>
+                <version>2.5.3</version>
                 <executions>
                     <execution>
                         <id>l4j-clui</id>
@@ -126,43 +121,6 @@
                                 <productName>RKadeGunConfig</productName>
                                 <internalName>RKadeGunConfig</internalName>
                                 <originalFilename>RKadeGunConfig.exe</originalFilename>
-                            </versionInfo>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>l4j-cl</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>launch4j</goal>
-                        </goals>
-                        <configuration>
-                            <headerType>console</headerType>
-                            <outfile>target/RKadeGunConfig-cli.exe</outfile>
-                            <jar>target/RKadeGunConfig-${project.version}.jar</jar>
-                            <errTitle>RKadeGunConfig</errTitle>
-                            <icon>src/main/resources/crosshair.ico</icon>
-                            <singleInstance>
-                                <mutexName>com.rkade.RKadeGunConfig</mutexName>
-                            </singleInstance>
-                            <classPath>
-                                <mainClass>com.rkade.App</mainClass>
-                                <addDependencies>false</addDependencies>
-                                <preCp>anything</preCp>
-                            </classPath>
-                            <jre>
-                                <path>jre</path>
-                                <opts>
-                                    <opt>-XX:+UseZGC -XX:+ZGenerational</opt>
-                                </opts>
-                            </jre>
-                            <versionInfo>
-                                <fileVersion>${project.version}</fileVersion>
-                                <fileDescription>Arcade Gun Device Config</fileDescription>
-                                <copyright>Copyright 2024 Rusty Knabe</copyright>
-                                <productVersion>${project.version}</productVersion>
-                                <productName>RKadeGunConfig</productName>
-                                <internalName>RKadeGunConfig</internalName>
-                                <originalFilename>RKadeGunConfig-cli.exe</originalFilename>
                             </versionInfo>
                         </configuration>
                     </execution>
