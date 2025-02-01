@@ -102,21 +102,19 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-
     }
 
     public void setCalibrating(boolean calibrating) {
         isCalibrating = calibrating;
         if (isCalibrating) {
-            xMax = Short.MIN_VALUE;
-            xMin = Short.MAX_VALUE;
-            yMax = Short.MIN_VALUE;
-            yMin = Short.MAX_VALUE;
+            xMin = Byte.MAX_VALUE;
+            xMax = Byte.MIN_VALUE;
+            yMin = Byte.MAX_VALUE;
+            yMax = Byte.MIN_VALUE;;
         } else {
             xAxisMinimum = xMin;
             xAxisMaximum = xMax;
