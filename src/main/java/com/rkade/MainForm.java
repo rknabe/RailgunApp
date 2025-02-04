@@ -17,6 +17,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private final static Logger logger = Logger.getLogger(MainForm.class.getName());
     private final AxisPanel axisPanel = new AxisPanel();
     private final DefaultComboBoxModel<Device> deviceListModel = new DefaultComboBoxModel<>();
+    private JFormattedTextField txtPlayerNum;
     private JPanel mainPanel;
     private JPanel bottomPanel;
     private JLabel statusLabel;
@@ -37,6 +38,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JComboBox<Device> deviceList;
     private JButton btnConnect;
     private JPanel devicePanel;
+    private JLabel lblPlayerNum;
     private Device device = null;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
@@ -51,7 +53,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect);
+                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, txtPlayerNum);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -68,6 +70,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         DefaultFormatter triggerHoldFormatter = (DefaultFormatter) triggerHoldField.getFormatter();
         triggerHoldFormatter.setCommitsOnValidEdit(true);
         spTriggerHold.setEditor(triggerHoldEditor);
+
+        txtPlayerNum.setFormatterFactory(new IntegerFormatterFactory(1, 32));
 
         deviceList.setModel(deviceListModel);
 
@@ -173,6 +177,18 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     @Override
     public void focusLost(FocusEvent e) {
+        if (device != null) {
+            if (e.getSource() == txtPlayerNum) {
+                Number ival = (Number) txtPlayerNum.getValue();
+                if (ival == null) {
+                    ival = 1;
+                }
+                short newValue = ival.shortValue();
+                if (lastSettings == null || newValue != lastSettings.getPlayerNumber()) {
+                    device.setPlayerNumber(ival.shortValue());
+                }
+            }
+        }
     }
 
     @Override
@@ -231,6 +247,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     cbAutoRecoil.setSelected(settings.isAutoRecoil());
                     spAutoTriggerSpeed.getModel().setValue(settings.getTriggerRepeatDelay());
                     spTriggerHold.getModel().setValue(settings.getTriggerHoldTime());
+                    txtPlayerNum.setText(String.valueOf(settings.getPlayerNumber()));
                 }
                 case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
                 //case GunDataReport gunData -> ammoText.setText(String.valueOf(gunData.getAmmoCount()));
@@ -262,6 +279,15 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 short newValue = ival.shortValue();
                 if (lastSettings == null || newValue != lastSettings.getTriggerHoldTime()) {
                     status = device.setTriggerHoldTime(ival.shortValue());
+                }
+            } else if (e.getSource() == txtPlayerNum) {
+                Number ival = (Number) txtPlayerNum.getValue();
+                if (ival == null) {
+                    ival = 1;
+                }
+                short newValue = ival.shortValue();
+                if (lastSettings == null || newValue != lastSettings.getPlayerNumber()) {
+                    status = device.setPlayerNumber(ival.shortValue());
                 }
             }
             if (!status) {

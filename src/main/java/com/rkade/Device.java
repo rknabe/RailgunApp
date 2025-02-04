@@ -115,6 +115,10 @@ public class Device {
         return sendCommand(CMD_SET_TRIGGER_HOLD, time);
     }
 
+    public synchronized boolean setPlayerNumber(short number) {
+        return sendCommand(CMD_SET_PLAYER_NUMBER, number);
+    }
+
     public synchronized boolean setUniqueId(short id) {
         return sendCommand(CMD_SET_UNIQUE_ID, id);
     }

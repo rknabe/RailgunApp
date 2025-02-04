@@ -18,6 +18,7 @@ public abstract class BaseForm implements ActionListener, ChangeListener, FocusL
                 component.addFocusListener(this);
                 switch (component) {
                     case AbstractButton button -> button.addActionListener(this);
+                    case JFormattedTextField textField -> textField.addActionListener(this);
                     case JTextField textField -> textField.addActionListener(this);
                     case JSlider slider -> slider.addChangeListener(this);
                     case JSpinner spinner -> spinner.addChangeListener(this);
