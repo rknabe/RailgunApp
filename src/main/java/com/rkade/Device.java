@@ -23,6 +23,10 @@ public class Device {
     public static final byte CMD_SET_TRIGGER_HOLD = 5;
     public static final byte CMD_SET_UNIQUE_ID = 6;
     public static final byte CMD_SET_AMMO_COUNT = 7;
+    public static final byte CMD_SET_USE_AMMO_COUNT = 8;
+    public static final byte CMD_SET_HEALTH = 9;
+    public static final byte CMD_SET_USE_DISPLAY = 10;
+    public static final byte CMD_SET_PLAYER_NUMBER = 11;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
