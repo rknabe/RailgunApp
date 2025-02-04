@@ -27,6 +27,7 @@ public class Device {
     public static final byte CMD_SET_HEALTH = 9;
     public static final byte CMD_SET_USE_DISPLAY = 10;
     public static final byte CMD_SET_PLAYER_NUMBER = 11;
+    public static final byte CMD_SET_RECOIL_STRENGTH = 12;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
@@ -121,6 +122,10 @@ public class Device {
 
     public synchronized boolean setUniqueId(short id) {
         return sendCommand(CMD_SET_UNIQUE_ID, id);
+    }
+
+    public boolean setRecoilStrength(int i) {
+        return sendCommand(CMD_SET_RECOIL_STRENGTH, (byte) i);
     }
 
     private boolean sendCommand(byte command) {

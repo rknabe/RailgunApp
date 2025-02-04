@@ -13,6 +13,7 @@ public final class SettingsDataReport extends DataReport {
     private final short triggerRepeatDelay;
     private final short triggerHoldTime;
     private final short playerNumber;
+    private final int recoilStrength;
     private final boolean useDisplay;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
@@ -27,6 +28,7 @@ public final class SettingsDataReport extends DataReport {
   int16_t triggerRepeatRate;
   int16_t triggerHoldTime;
   int8_t playerNumber;
+  int8_t recoilStrength;
   bool autoRecoil;
   bool useDisplay;
         */
@@ -39,6 +41,7 @@ public final class SettingsDataReport extends DataReport {
         triggerRepeatDelay = buffer.getShort();
         triggerHoldTime = buffer.getShort();
         playerNumber = buffer.get();
+        recoilStrength = (buffer.get() & 0xFF);
         autoRecoil = buffer.get() > 0;
         useDisplay = buffer.get() > 0;
     }
@@ -85,5 +88,9 @@ public final class SettingsDataReport extends DataReport {
 
     public boolean isUseDisplay() {
         return useDisplay;
+    }
+
+    public int getRecoilStrength() {
+        return recoilStrength;
     }
 }

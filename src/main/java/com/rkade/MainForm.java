@@ -39,6 +39,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JButton btnConnect;
     private JPanel devicePanel;
     private JLabel lblPlayerNum;
+    private JLabel lblRecoilStrength;
+    private JRadioButton rbFull;
+    private JRadioButton rbMed;
+    private ButtonGroup recoilStrengthGroup = new ButtonGroup();
     private Device device = null;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
@@ -53,7 +57,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, txtPlayerNum);
+                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, txtPlayerNum, rbFull, rbMed);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -72,6 +76,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         spTriggerHold.setEditor(triggerHoldEditor);
 
         txtPlayerNum.setFormatterFactory(new IntegerFormatterFactory(1, 32));
+
+        recoilStrengthGroup.add(rbFull);
+        recoilStrengthGroup.add(rbMed);
 
         deviceList.setModel(deviceListModel);
 
@@ -133,6 +140,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 return status;
             } else if (e.getActionCommand().equals(cbAutoRecoil.getActionCommand())) {
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
+            }
+            else if (e.getActionCommand().equals(rbFull.getActionCommand()) || e.getActionCommand().equals(rbMed.getActionCommand())) {
+                return device.setRecoilStrength(rbFull.isSelected() ? 255 : 180);
             }
         }
         if (e.getActionCommand().equals(btnConnect.getActionCommand())) {
@@ -248,6 +258,11 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     spAutoTriggerSpeed.getModel().setValue(settings.getTriggerRepeatDelay());
                     spTriggerHold.getModel().setValue(settings.getTriggerHoldTime());
                     txtPlayerNum.setText(String.valueOf(settings.getPlayerNumber()));
+                    if (settings.getRecoilStrength() < 255) {
+                        rbMed.setSelected(true);
+                    } else {
+                        rbFull.setSelected(true);
+                    }
                 }
                 case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
                 //case GunDataReport gunData -> ammoText.setText(String.valueOf(gunData.getAmmoCount()));

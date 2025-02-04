@@ -2,11 +2,11 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.MainForm">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="881" height="700"/>
+      <xy x="20" y="20" width="800" height="700"/>
     </constraints>
     <properties>
-      <minimumSize width="780" height="700"/>
-      <preferredSize width="780" height="700"/>
+      <minimumSize width="800" height="700"/>
+      <preferredSize width="800" height="700"/>
     </properties>
     <border type="none"/>
     <children>
@@ -15,16 +15,16 @@
         <properties>
           <autoscrolls value="false"/>
           <maximumSize width="1000" height="100"/>
-          <minimumSize width="780" height="83"/>
-          <preferredSize width="780" height="83"/>
+          <minimumSize width="800" height="83"/>
+          <preferredSize width="800" height="83"/>
         </properties>
         <border type="bevel-raised"/>
         <children>
           <grid id="6d238" binding="devicePanel" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="1">
             <constraints/>
             <properties>
-              <minimumSize width="860" height="40"/>
-              <preferredSize width="860" height="40"/>
+              <minimumSize width="800" height="40"/>
+              <preferredSize width="800" height="40"/>
               <verifyInputWhenFocusTarget value="false"/>
             </properties>
             <border type="etched"/>
@@ -118,17 +118,17 @@
             <constraints border-constraint="North"/>
             <properties>
               <autoscrolls value="false"/>
-              <minimumSize width="780" height="540"/>
-              <preferredSize width="780" height="540"/>
+              <minimumSize width="800" height="540"/>
+              <preferredSize width="800" height="540"/>
             </properties>
             <border type="bevel-lowered"/>
             <children>
               <grid id="a1a7d" binding="settingsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="South"/>
                 <properties>
-                  <maximumSize width="780" height="50"/>
-                  <minimumSize width="780" height="50"/>
-                  <preferredSize width="780" height="50"/>
+                  <maximumSize width="780" height="75"/>
+                  <minimumSize width="780" height="75"/>
+                  <preferredSize width="780" height="75"/>
                 </properties>
                 <border type="bevel-raised"/>
                 <children>
@@ -196,10 +196,14 @@
                       <toolTipText value="Amount of time to hold trigger for auto-fire, if zero, auto-fire disabled"/>
                     </properties>
                   </component>
+                  <hspacer id="acdb4">
+                    <constraints/>
+                  </hspacer>
                   <component id="ad6f5" class="javax.swing.JLabel" binding="lblPlayerNum">
                     <constraints/>
                     <properties>
-                      <text value="Player#"/>
+                      <labelFor value="b0d90"/>
+                      <text value="Player #"/>
                     </properties>
                   </component>
                   <component id="b0d90" class="javax.swing.JFormattedTextField" binding="txtPlayerNum">
@@ -208,6 +212,31 @@
                       <minimumSize width="40" height="34"/>
                       <preferredSize width="40" height="34"/>
                       <text value="1"/>
+                    </properties>
+                  </component>
+                  <hspacer id="bb6ee">
+                    <constraints/>
+                  </hspacer>
+                  <component id="bc08c" class="javax.swing.JLabel" binding="lblRecoilStrength">
+                    <constraints/>
+                    <properties>
+                      <text value="Recoil Strength:"/>
+                    </properties>
+                  </component>
+                  <component id="7937f" class="javax.swing.JRadioButton" binding="rbFull">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="rbFull"/>
+                      <label value="Full"/>
+                      <text value="Full"/>
+                    </properties>
+                  </component>
+                  <component id="69f8f" class="javax.swing.JRadioButton" binding="rbMed">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="rbMed"/>
+                      <label value="Medium"/>
+                      <text value="Medium"/>
                     </properties>
                   </component>
                 </children>
@@ -221,4 +250,11 @@
       </grid>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="strength">
+      <member id="7937f"/>
+      <member id="7937f"/>
+      <member id="69f8f"/>
+    </group>
+  </buttonGroups>
 </form>
