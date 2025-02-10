@@ -132,7 +132,8 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     private void closeDevice(HidDevice hidDevice) {
         try {
             hidDevice.close();
-        } catch (Exception _) {
+        } catch (Exception ex) {
+            logger.warning(ex.getMessage());
         }
     }
 
@@ -217,20 +218,14 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                 if (openedDevice != null) {
                     openedDevice.open();
                     openedDevice.setInputReportListener(DeviceManager.this);
-                    Device device = getDevice(openedDevice);
+                    //Device device = getDevice(openedDevice);
                     openedDevice.setDeviceRemovalListener(DeviceManager.this);
-                    notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
-                    notifyListenersDeviceAttached(device);
+                    //notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
+                    //notifyListenersDeviceAttached(device);
                     //connectDevice(device);
                     sleep(50);
-                    getFeatureReport(openedDevice, (byte) Device.CMD_GET_FEATURE, (byte) 0, reportData);
+                    getFeatureReport(openedDevice, Device.CMD_GET_FEATURE, (byte) 0, reportData);
                     sleep(50);
-                    //getOutputReport(openedDevice, (byte) 2, (byte) 0, reportData);
-                    //sleep(50);
-                    //setFeatureReport(openedDevice, (byte) 1, (byte) 0, reportData);
-                    //sleep(50);
-                    //openedDevice.getInputReportDescriptor(reportData, 64);
-                    //sleep(50);
                 }
             } catch (Exception ex) {
                 logger.warning(ex.getMessage());
