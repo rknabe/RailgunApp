@@ -24,7 +24,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="1494e" class="javax.swing.JLabel">
+          <component id="1494e" class="javax.swing.JLabel" binding="lblButtons">
             <constraints/>
             <properties>
               <text value="Buttons: "/>

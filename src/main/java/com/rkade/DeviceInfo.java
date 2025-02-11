@@ -1,16 +1,14 @@
 package com.rkade;
 
-import purejavahidapi.HidDeviceInfo;
+import org.hid4java.HidDevice;
 
 import java.util.Objects;
 
 public final class DeviceInfo {
-    private final HidDeviceInfo hidDeviceInfo;
     private final String path;
 
-    public DeviceInfo(HidDeviceInfo hidDeviceInfo) {
-        this.hidDeviceInfo = hidDeviceInfo;
-        this.path = hidDeviceInfo.getPath().trim().toUpperCase();
+    public DeviceInfo(HidDevice hidDevice) {
+        this.path = hidDevice.getPath().trim().toUpperCase();
     }
 
     @Override
@@ -20,13 +18,6 @@ public final class DeviceInfo {
         return Objects.equals(path, that.path);
     }
 
-    public HidDeviceInfo getHidDeviceInfo() {
-        return hidDeviceInfo;
-    }
-
-    public String getPath() {
-        return path;
-    }
 
     @Override
     public int hashCode() {

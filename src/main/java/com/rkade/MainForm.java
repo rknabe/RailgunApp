@@ -202,7 +202,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     }
 
     @Override
-    public void deviceFound(Device device) {
+    public void deviceAttached(Device device) {
         if (deviceListModel.getIndexOf(device) < 0) {
             deviceListModel.addElement(device);
             statusLabel.setText("Found, ready to connect...");
@@ -213,25 +213,29 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     }
 
     @Override
-    public void deviceAttached(Device device) {
+    public void deviceDetached(Device device) {
+        deviceListModel.removeElement(device);
+    }
+
+    @Override
+    public void deviceConnected(Device device) {
         this.device = device;
         firmwareLabel.setText(device.getFirmwareType() + ":" + device.getFirmwareVersion());
         setPanelEnabled(true);
-        statusLabel.setText("Attached");
-        buttonsPanel.deviceAttached(device);
+        statusLabel.setText("Connected");
+        buttonsPanel.deviceConnected(device);
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
         deviceList.setEnabled(true);
     }
 
     @Override
-    public void deviceDetached(Device device) {
+    public void deviceDisconnected(Device device) {
         firmwareLabel.setText("");
         this.device = null;
         setPanelEnabled(false);
         statusLabel.setText("Detached");
-        buttonsPanel.deviceDetached(device);
-        deviceListModel.removeElement(device);
+        buttonsPanel.deviceDisconnected(device);
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
         deviceList.setEnabled(true);
@@ -244,7 +248,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         }
 
         if (report != null) {
-            //if (report.getReportType() == Device.DATA_REPORT_ID) {
             switch (report) {
                 case ButtonsDataReport buttonsData -> buttonsPanel.deviceUpdated(device, status, buttonsData);
                 case SettingsDataReport settings -> {
@@ -265,11 +268,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     }
                 }
                 case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
-                //case GunDataReport gunData -> ammoText.setText(String.valueOf(gunData.getAmmoCount()));
                 default -> {
                 }
             }
-            //}
         }
     }
 
@@ -310,11 +311,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
             }
         }
         if (e.getSource() == deviceList) {
-            if (deviceList.getSelectedItem() == null) {
-                btnConnect.setEnabled(false);
-            } else {
-                btnConnect.setEnabled(true);
-            }
+            btnConnect.setEnabled(deviceList.getSelectedItem() != null);
         }
     }
 

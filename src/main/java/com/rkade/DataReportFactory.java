@@ -13,6 +13,7 @@ public abstract class DataReportFactory {
             ByteBuffer buffer = ByteBuffer.allocate(data.length).order(ByteOrder.LITTLE_ENDIAN);
             buffer.put(data);
             buffer.rewind();
+            byte dataType = buffer.get(); //read past the data type first byte
             byte type = buffer.get(); //read past the data type first byte
 
             if (reportType == Device.CMD_GET_FEATURE) {
@@ -21,19 +22,7 @@ public abstract class DataReportFactory {
                 //these have to go in the correct order because they read sequentially from same data structure
                 reports.add(new AxisDataReport(reportType, buffer));
                 reports.add(new ButtonsDataReport(reportType, buffer));
-                //reports.add(new GunDataReport(reportType, buffer));
             }
-
-            /*
-            return switch (reportType) {
-                case Device.CMD_GET_STEER -> new WheelDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_ANALOG -> new AxisDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_GAINS -> new GainsDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_MISC -> new MiscDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_BUTTONS -> new ButtonsDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_VER -> new VersionDataReport(reportType, reportIndex, section, buffer);
-                default -> null;
-            };*/
         }
         return reports;
     }

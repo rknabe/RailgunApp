@@ -1,7 +1,7 @@
 package com.rkade;
 
 import com.fazecast.jSerialComm.SerialPort;
-import purejavahidapi.HidDevice;
+import org.hid4java.HidDevice;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -36,15 +36,13 @@ public class Device {
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
     private static final Logger logger = Logger.getLogger(Device.class.getName());
     private final HidDevice hidDevice;
-    private final String path;
     private String name;
     private String firmwareType;
     private String firmwareVersion;
 
     public Device(HidDevice hidDevice) {
         this.hidDevice = hidDevice;
-        this.name = hidDevice.getHidDeviceInfo().getProductString();
-        this.path = hidDevice.getHidDeviceInfo().getPath();
+        this.name = hidDevice.getProduct();
     }
 
     public static synchronized String readUniqueId(SerialPort port) {
@@ -157,7 +155,7 @@ public class Device {
         data[8] = getFirstByte(arg4);
         data[9] = getSecondByte(arg4);
 
-        int ret = hidDevice.setFeatureReport(Device.CMD_VENDOR, data, 10);
+        int ret = hidDevice.sendFeatureReport(data, Device.CMD_VENDOR);
         if (ret <= 0) {
             logger.severe("Device returned error on setFeatureReport:" + ret);
             return false;
@@ -175,10 +173,6 @@ public class Device {
 
     private byte getSecondByte(short value) {
         return (byte) ((value >> 8) & 0xff);
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {

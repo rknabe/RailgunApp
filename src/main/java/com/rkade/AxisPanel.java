@@ -35,7 +35,7 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
             yMax = (short) Math.max(y, yMax);
             yMin = (short) Math.min(y, yMin);
         }
-        repaint();
+        SwingUtilities.invokeLater(this::repaint);
     }
 
     private void updateControls(AxisDataReport axisDataReport) {
@@ -79,18 +79,19 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     }
 
     @Override
-    public void deviceFound(Device device) {
-
-    }
-
-    @Override
     public void deviceAttached(Device device) {
-
     }
 
     @Override
     public void deviceDetached(Device device) {
+    }
 
+    @Override
+    public void deviceConnected(Device device) {
+    }
+
+    @Override
+    public void deviceDisconnected(Device device) {
     }
 
     @Override
@@ -114,7 +115,8 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
             xMin = Byte.MAX_VALUE;
             xMax = Byte.MIN_VALUE;
             yMin = Byte.MAX_VALUE;
-            yMax = Byte.MIN_VALUE;;
+            yMax = Byte.MIN_VALUE;
+            ;
         } else {
             xAxisMinimum = xMin;
             xAxisMaximum = xMax;

@@ -23,6 +23,7 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     private JButton button6;
     private JButton button7;
     private JButton button8;
+    private JLabel lblButtons;
     private Device device = null;
 
     {
@@ -41,18 +42,21 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     @Override
-    public void deviceFound(Device device) {
-
+    public void deviceAttached(Device device) {
     }
 
     @Override
-    public void deviceAttached(Device device) {
+    public void deviceDetached(Device device) {
+    }
+
+    @Override
+    public void deviceConnected(Device device) {
         this.device = device;
         setPanelEnabled(true);
     }
 
     @Override
-    public void deviceDetached(Device device) {
+    public void deviceDisconnected(Device device) {
         this.device = null;
         setPanelEnabled(false);
     }
