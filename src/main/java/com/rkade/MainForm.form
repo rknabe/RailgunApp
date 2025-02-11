@@ -202,16 +202,15 @@
                   <component id="ad6f5" class="javax.swing.JLabel" binding="lblPlayerNum">
                     <constraints/>
                     <properties>
-                      <labelFor value="b0d90"/>
+                      <labelFor value="7c924"/>
                       <text value="Player #"/>
                     </properties>
                   </component>
-                  <component id="b0d90" class="javax.swing.JFormattedTextField" binding="txtPlayerNum">
+                  <component id="7c924" class="javax.swing.JSpinner" binding="spPlayerNum">
                     <constraints/>
                     <properties>
-                      <minimumSize width="40" height="34"/>
-                      <preferredSize width="40" height="34"/>
-                      <text value="1"/>
+                      <minimumSize width="55" height="34"/>
+                      <preferredSize width="55" height="34"/>
                     </properties>
                   </component>
                   <hspacer id="bb6ee">

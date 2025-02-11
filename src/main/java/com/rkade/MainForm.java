@@ -17,7 +17,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private final static Logger logger = Logger.getLogger(MainForm.class.getName());
     private final AxisPanel axisPanel = new AxisPanel();
     private final DefaultComboBoxModel<Device> deviceListModel = new DefaultComboBoxModel<>();
-    private JFormattedTextField txtPlayerNum;
+    private JSpinner spPlayerNum;
     private JPanel mainPanel;
     private JPanel bottomPanel;
     private JLabel statusLabel;
@@ -57,7 +57,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, txtPlayerNum, rbFull, rbMed);
+                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -75,7 +75,13 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         triggerHoldFormatter.setCommitsOnValidEdit(true);
         spTriggerHold.setEditor(triggerHoldEditor);
 
-        txtPlayerNum.setFormatterFactory(new IntegerFormatterFactory(1, 32));
+        SpinnerNumberModel playerNumModel = new SpinnerNumberModel(1, 1, 32, 1);
+        spPlayerNum.setModel(playerNumModel);
+        JSpinner.NumberEditor playerNumEditor = new JSpinner.NumberEditor(spPlayerNum, "#");
+        JFormattedTextField playerNumField = playerNumEditor.getTextField();
+        DefaultFormatter playerNumFormatter = (DefaultFormatter) playerNumField.getFormatter();
+        playerNumFormatter.setCommitsOnValidEdit(true);
+        spPlayerNum.setEditor(playerNumEditor);
 
         recoilStrengthGroup.add(rbFull);
         recoilStrengthGroup.add(rbMed);
@@ -140,8 +146,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 return status;
             } else if (e.getActionCommand().equals(cbAutoRecoil.getActionCommand())) {
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
-            }
-            else if (e.getActionCommand().equals(rbFull.getActionCommand()) || e.getActionCommand().equals(rbMed.getActionCommand())) {
+            } else if (e.getActionCommand().equals(rbFull.getActionCommand()) || e.getActionCommand().equals(rbMed.getActionCommand())) {
                 return device.setRecoilStrength(rbFull.isSelected() ? 255 : 180);
             }
         }
@@ -188,8 +193,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     @Override
     public void focusLost(FocusEvent e) {
         if (device != null) {
-            if (e.getSource() == txtPlayerNum) {
-                Number ival = (Number) txtPlayerNum.getValue();
+            if (e.getSource() == spPlayerNum) {
+                Number ival = (Number) spPlayerNum.getValue();
                 if (ival == null) {
                     ival = 1;
                 }
@@ -243,35 +248,37 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     @Override
     public void deviceUpdated(Device device, String status, DataReport report) {
-        if (status != null) {
-            statusLabel.setText(status);
-        }
+        SwingUtilities.invokeLater(() -> {
+            if (status != null) {
+                statusLabel.setText(status);
+            }
 
-        if (report != null) {
-            switch (report) {
-                case ButtonsDataReport buttonsData -> buttonsPanel.deviceUpdated(device, status, buttonsData);
-                case SettingsDataReport settings -> {
-                    lastSettings = settings;
-                    firmwareLabel.setText(settings.getDeviceType() + ":" + settings.getDeviceVersion());
-                    axisPanel.setXAxisMinimum(settings.getXAxisMinimum());
-                    axisPanel.setXAxisMaximum(settings.getXAxisMaximum());
-                    axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
-                    axisPanel.setYAxisMaximum(settings.getYAxisMaximum());
-                    cbAutoRecoil.setSelected(settings.isAutoRecoil());
-                    spAutoTriggerSpeed.getModel().setValue(settings.getTriggerRepeatDelay());
-                    spTriggerHold.getModel().setValue(settings.getTriggerHoldTime());
-                    txtPlayerNum.setText(String.valueOf(settings.getPlayerNumber()));
-                    if (settings.getRecoilStrength() < 255) {
-                        rbMed.setSelected(true);
-                    } else {
-                        rbFull.setSelected(true);
+            if (report != null) {
+                switch (report) {
+                    case ButtonsDataReport buttonsData -> buttonsPanel.deviceUpdated(device, status, buttonsData);
+                    case SettingsDataReport settings -> {
+                        lastSettings = settings;
+                        firmwareLabel.setText(settings.getDeviceType() + ":" + settings.getDeviceVersion());
+                        axisPanel.setXAxisMinimum(settings.getXAxisMinimum());
+                        axisPanel.setXAxisMaximum(settings.getXAxisMaximum());
+                        axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
+                        axisPanel.setYAxisMaximum(settings.getYAxisMaximum());
+                        cbAutoRecoil.setSelected(settings.isAutoRecoil());
+                        spAutoTriggerSpeed.getModel().setValue(settings.getTriggerRepeatDelay());
+                        spTriggerHold.getModel().setValue(settings.getTriggerHoldTime());
+                        spPlayerNum.getModel().setValue(settings.getPlayerNumber());
+                        if (settings.getRecoilStrength() < 255) {
+                            rbMed.setSelected(true);
+                        } else {
+                            rbFull.setSelected(true);
+                        }
+                    }
+                    case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
+                    default -> {
                     }
                 }
-                case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
-                default -> {
-                }
             }
-        }
+        });
     }
 
     @Override
@@ -296,8 +303,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 if (lastSettings == null || newValue != lastSettings.getTriggerHoldTime()) {
                     status = device.setTriggerHoldTime(ival.shortValue());
                 }
-            } else if (e.getSource() == txtPlayerNum) {
-                Number ival = (Number) txtPlayerNum.getValue();
+            } else if (e.getSource() == spPlayerNum) {
+                Number ival = (Number) spPlayerNum.getValue();
                 if (ival == null) {
                     ival = 1;
                 }
