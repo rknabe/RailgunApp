@@ -42,6 +42,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JLabel lblRecoilStrength;
     private JRadioButton rbFull;
     private JRadioButton rbMed;
+    private JButton btnUpdate;
     private ButtonGroup recoilStrengthGroup = new ButtonGroup();
     private Device device = null;
     private volatile boolean isCalibrating = false;
@@ -57,7 +58,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed);
+                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -148,6 +149,12 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
             } else if (e.getActionCommand().equals(rbFull.getActionCommand()) || e.getActionCommand().equals(rbMed.getActionCommand())) {
                 return device.setRecoilStrength(rbFull.isSelected() ? 255 : 180);
+            } else if (e.getActionCommand().equals(btnUpdate.getActionCommand())) {
+                FirmwareDialog dialog = new FirmwareDialog(deviceManager.getConnectedDevice());
+                dialog.pack();
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+                return true;
             }
         }
         if (e.getActionCommand().equals(btnConnect.getActionCommand())) {

@@ -9,8 +9,6 @@ import java.util.logging.Logger;
 
 public final class DeviceManager implements HidServicesListener {
     private final static Logger logger = Logger.getLogger(DeviceManager.class.getName());
-    private final static int LEONARDO_VENDOR_ID = 0x303A;
-    private final static int LEONARDO_PRODUCT_ID = 0x8234;
     private final static List<DeviceListener> deviceListeners = Collections.synchronizedList(new ArrayList<>());
     private final static Map<String, Device> deviceMap = Collections.synchronizedMap(new HashMap<>());
     private final static Map<Device, SettingsDataReport> deviceSettings = Collections.synchronizedMap(new HashMap<>());
@@ -40,7 +38,7 @@ public final class DeviceManager implements HidServicesListener {
     @Override
     public void hidDeviceAttached(HidServicesEvent hidServicesEvent) {
         HidDevice hidDevice = hidServicesEvent.getHidDevice();
-        if (hidDevice.getVendorId() == LEONARDO_VENDOR_ID && hidDevice.getProductId() == LEONARDO_PRODUCT_ID) {
+        if (hidDevice.getVendorId() == Device.ESP32_VID && hidDevice.getProductId() == Device.ESP32_PID) {
             boolean open = hidDevice.open();
             if (open) {
                 byte[] reportData = new byte[64];
@@ -104,6 +102,7 @@ public final class DeviceManager implements HidServicesListener {
                             SerialPort port = findMatchingCommPort(uniqueId);
                             if (port != null) {
                                 device.setName(settings.getDeviceType() + " (" + port.getSystemPortName() + ")");
+                                device.setPort(port);
                             }
                         }
                         device.setFirmwareType(settings.getDeviceType());
@@ -176,7 +175,7 @@ public final class DeviceManager implements HidServicesListener {
     private SerialPort findMatchingCommPort(short uniqueId) {
         SerialPort[] ports = SerialPort.getCommPorts();
         for (SerialPort port : ports) {
-            if (port.getVendorID() == LEONARDO_VENDOR_ID && port.getProductID() == LEONARDO_PRODUCT_ID) {
+            if (port.getVendorID() == Device.ESP32_VID && port.getProductID() == Device.ESP32_PID) {
                 String uniqueIdStr = Device.readUniqueId(port);
                 if (uniqueIdStr != null) try {
                     short id = Short.parseShort(uniqueIdStr);
@@ -187,6 +186,13 @@ public final class DeviceManager implements HidServicesListener {
                     logger.warning(ex.getMessage());
                 }
             }
+        }
+        return null;
+    }
+
+    public Device getConnectedDevice() {
+        if (openedDevice != null && !openedDevice.isClosed()) {
+            return getDevice(openedDevice);
         }
         return null;
     }

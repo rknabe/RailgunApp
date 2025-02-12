@@ -70,6 +70,12 @@
                   <text value="Firmware:"/>
                 </properties>
               </component>
+              <component id="a99af" class="javax.swing.JButton" binding="btnUpdate">
+                <constraints/>
+                <properties>
+                  <text value="Update"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <component id="21199" class="javax.swing.JButton" binding="defaultsButton">

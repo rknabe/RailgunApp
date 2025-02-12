@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.FirmwareDialog">
+  <grid id="cbd77" binding="contentPane" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="48" y="54" width="560" height="560"/>
+    </constraints>
+    <properties>
+      <minimumSize width="500" height="500"/>
+      <preferredSize width="500" height="500"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="94766" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="9538f" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="e7465" class="javax.swing.JButton" binding="btnCheck">
+                <constraints border-constraint="West"/>
+                <properties>
+                  <text value="Check for Updates"/>
+                </properties>
+              </component>
+              <component id="88e53" class="javax.swing.JButton" binding="btnUpdate">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <label value="Update"/>
+                  <maximumSize width="149" height="34"/>
+                  <minimumSize width="149" height="34"/>
+                  <preferredSize width="149" height="34"/>
+                  <text value="Update"/>
+                </properties>
+              </component>
+              <component id="5723f" class="javax.swing.JButton" binding="btnClose">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <label value="Done"/>
+                  <maximumSize width="149" height="34"/>
+                  <minimumSize width="149" height="34"/>
+                  <preferredSize width="149" height="34"/>
+                  <text value="Done"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <scrollpane id="a3598" binding="scrollPane">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <autoscrolls value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="a8bd9" class="javax.swing.JTextArea" binding="txtOutput">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>

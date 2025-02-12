@@ -10,22 +10,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 public class Device {
-    public static final byte CMD_REPORT_ID = 15;
-    public static final byte DATA_REPORT_ID = 1;
-    public static final byte DATA_REPORT_VALUE_COUNT = 31;
     public static final byte CMD_GET_FEATURE = 2;
     public static final byte CMD_GET_STATE = 3;
     public static final byte CMD_VENDOR = 6;
-    public static final byte CMD_HEARTBEAT = 0;
     public static final byte CMD_SET_AXIS_LIMITS = 2;
     public static final byte CMD_SET_AUTO_RECOIL = 3;
     public static final byte CMD_SET_TRIGGER_RATE = 4;
     public static final byte CMD_SET_TRIGGER_HOLD = 5;
     public static final byte CMD_SET_UNIQUE_ID = 6;
-    public static final byte CMD_SET_AMMO_COUNT = 7;
-    public static final byte CMD_SET_USE_AMMO_COUNT = 8;
-    public static final byte CMD_SET_HEALTH = 9;
-    public static final byte CMD_SET_USE_DISPLAY = 10;
     public static final byte CMD_SET_PLAYER_NUMBER = 11;
     public static final byte CMD_SET_RECOIL_STRENGTH = 12;
     public static final byte CMD_EESAVE = 16;
@@ -34,11 +26,15 @@ public class Device {
     public static final byte CMD_RECOIL = 19;
     public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId!";
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
+    public static final int ESP32_VID = 0x303A;
+    public static final int ESP32_PID = 0x8234;
+    public static final int ESP32_JTAG_PID = 0x1001;
     private static final Logger logger = Logger.getLogger(Device.class.getName());
     private final HidDevice hidDevice;
     private String name;
     private String firmwareType;
     private String firmwareVersion;
+    private SerialPort port;
 
     public Device(HidDevice hidDevice) {
         this.hidDevice = hidDevice;
@@ -163,6 +159,21 @@ public class Device {
         return true;
     }
 
+    public boolean resetToBootLoader() {
+        if (port == null) {
+            logger.warning("Com port not set, ensure no other software attached");
+            return false;
+        }
+        if (!port.isOpen()) {
+            port.openPort();
+        }
+        port.setBaudRate(1200);
+        port.writeBytes(new byte[1], 1);
+        port.flushIOBuffers();
+        port.closePort();
+        return true;
+    }
+
     public HidDevice getHidDevice() {
         return hidDevice;
     }
@@ -193,5 +204,9 @@ public class Device {
 
     public void setFirmwareVersion(String firmwareVersion) {
         this.firmwareVersion = firmwareVersion;
+    }
+
+    public void setPort(SerialPort port) {
+        this.port = port;
     }
 }
