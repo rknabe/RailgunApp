@@ -160,18 +160,18 @@ public class FirmwareDialog extends JDialog {
         try {
             boolean reset = device.resetToBootLoader();
             if (reset) {
+                txtOutput.append("Waiting for Upload port" + System.lineSeparator());
                 sleep(1000);
+                String myExe = ProcessHandle.current().info().command().get();
+                Path exePath = Paths.get(myExe);
+                exePath = exePath.getParent().getParent().getParent();
+                exePath = exePath.resolve("esptool.exe");
+                //TODO: harden this if exePath null, find by other route
+                txtOutput.append("Uploading firmware..." + System.lineSeparator());
                 SerialPort port = findBootLoaderPort();
                 if (port != null) {
-                    txtOutput.append("Uploading firmware..." + System.lineSeparator());
-                    String myExe = ProcessHandle.current().info().command().get();
-                    Path exePath = Paths.get(myExe);
-                    exePath = exePath.getParent().getParent().getParent();
-                    exePath = exePath.resolve("esptool.exe");
-
                     String portName = port.getSystemPortName();
                     String cmd = String.format(updateCmd, exePath, portName, firmwareBootFile, firmwarePartFile, bootBinFile, firmwareBinFile);
-
                     Runtime rt = Runtime.getRuntime();
                     String[] commands = {cmd};
                     Process proc = rt.exec(commands);
