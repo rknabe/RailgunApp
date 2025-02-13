@@ -16,9 +16,9 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
@@ -32,6 +32,7 @@ public class FirmwareDialog extends JDialog {
     private final static String FILE_FIRMWARE_PARTITION = "RailgunFirmware.ino.partitions.bin";
     private final static String FILE_FIRMWARE_URL = "https://github.com/rknabe/RailgunApp/releases/download/Firmware/";
     private final static String DIR_TEMP = System.getProperty("java.io.tmpdir");
+    private final static String EXE_ESP_TOOL = "esptool.exe";
     private final static String updateCmd = "\"%s\" --chip esp32s3 --port \"%s\" --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode keep --flash_freq keep --flash_size keep 0x0 \"%s\" 0x8000 \"%s\" 0xe000 \"%s\" 0x10000 \"%s\"";
     private final static String bootBinFile = DIR_TEMP + FILE_BOOT_BIN;
     private final static String firmwareBinFile = DIR_TEMP + FILE_FIRMWARE_BIN;
@@ -75,6 +76,11 @@ public class FirmwareDialog extends JDialog {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    private Path getExePathFromCurrentDir() {
+        Path curDir = FileSystems.getDefault().getPath("").toAbsolutePath();
+        return curDir.resolve(EXE_ESP_TOOL);
+    }
+
     private CompletableFuture<Long> downloadToFile(String fileURL, String remoteFilename, String localFilename) throws Exception {
         URL url = new URI(fileURL + remoteFilename).toURL();
         CompletableFuture<Long> completableFuture = new CompletableFuture<>();
@@ -95,7 +101,6 @@ public class FirmwareDialog extends JDialog {
         });
         return completableFuture;
     }
-
 
     private void onCheck() {
         txtOutput.setText("Checking..." + System.lineSeparator());
@@ -143,32 +148,14 @@ public class FirmwareDialog extends JDialog {
         }
     }
 
-    private SerialPort findBootLoaderPort() {
-        //TODO: harden this to loop ~4 times and sleep 500ms between until found
-        SerialPort[] ports = SerialPort.getCommPorts();
-        for (SerialPort port : ports) {
-            if (port.getVendorID() == Device.ESP32_VID) {
-                if (port.getProductID() == Device.ESP32_JTAG_PID) {
-                    return port;
-                }
-            }
-        }
-        return null;
-    }
-
     private boolean applyFirmware(Void unused) {
         try {
             boolean reset = device.resetToBootLoader();
             if (reset) {
                 txtOutput.append("Waiting for Upload port" + System.lineSeparator());
-                sleep(1000);
-                String myExe = ProcessHandle.current().info().command().get();
-                Path exePath = Paths.get(myExe);
-                exePath = exePath.getParent().getParent().getParent();
-                exePath = exePath.resolve("esptool.exe");
-                //TODO: harden this if exePath null, find by other route
+                Path exePath = getExePathFromCurrentDir();
+                SerialPort port = device.findBootLoaderPort();
                 txtOutput.append("Uploading firmware..." + System.lineSeparator());
-                SerialPort port = findBootLoaderPort();
                 if (port != null) {
                     String portName = port.getSystemPortName();
                     String cmd = String.format(updateCmd, exePath, portName, firmwareBootFile, firmwarePartFile, bootBinFile, firmwareBinFile);
@@ -196,14 +183,6 @@ public class FirmwareDialog extends JDialog {
         } catch (Exception ex) {
             logger.warning(ex.toString());
             return false;
-        }
-    }
-
-    private void sleep(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (Exception ex) {
-            logger.warning(ex.getMessage());
         }
     }
 

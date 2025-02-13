@@ -174,6 +174,27 @@ public class Device {
         return true;
     }
 
+    private void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (Exception ex) {
+            logger.warning(ex.getMessage());
+        }
+    }
+
+    public SerialPort findBootLoaderPort() {
+        for (int i = 0; i < 10; i++) {
+            sleep(500);
+            SerialPort[] ports = SerialPort.getCommPorts();
+            for (SerialPort port : ports) {
+                if (port.getVendorID() == Device.ESP32_VID && port.getProductID() == Device.ESP32_JTAG_PID) {
+                    return port;
+                }
+            }
+        }
+        return null;
+    }
+
     public HidDevice getHidDevice() {
         return hidDevice;
     }
