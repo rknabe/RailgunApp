@@ -95,6 +95,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
         deviceList.setEnabled(true);
+        statusLabel.setForeground(Color.YELLOW);
     }
 
     public void setDeviceManager(DeviceManager deviceManager) {
@@ -218,6 +219,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         if (deviceListModel.getIndexOf(device) < 0) {
             deviceListModel.addElement(device);
             statusLabel.setText("Found, ready to connect...");
+            statusLabel.setForeground(Color.YELLOW);
         }
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
@@ -235,6 +237,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         firmwareLabel.setText(device.getFirmwareType() + ":" + device.getFirmwareVersion());
         setPanelEnabled(true);
         statusLabel.setText("Connected");
+        statusLabel.setForeground(Color.GREEN);
         buttonsPanel.deviceConnected(device);
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
@@ -247,6 +250,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         this.device = null;
         setPanelEnabled(false);
         statusLabel.setText("Detached");
+        statusLabel.setForeground(Color.YELLOW);
         buttonsPanel.deviceDisconnected(device);
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
