@@ -57,11 +57,11 @@ public class FirmwareDialog extends JDialog {
 
         this.device = device;
 
-        btnCheck.addActionListener(e -> onCheck());
+        btnCheck.addActionListener(_ -> onCheck());
 
-        btnClose.addActionListener(e -> onClose());
+        btnClose.addActionListener(_ -> onClose());
 
-        btnUpdate.addActionListener(e -> onUpdate());
+        btnUpdate.addActionListener(_ -> onUpdate());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -72,7 +72,7 @@ public class FirmwareDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(e -> onClose(),
+        contentPane.registerKeyboardAction(_ -> onClose(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 

@@ -32,7 +32,7 @@ public final class DeviceManager implements HidServicesListener {
     }
 
     private Device getDevice(HidDevice hidDevice) {
-        return deviceMap.computeIfAbsent(hidDevice.getPath(), k -> new Device(hidDevice));
+        return deviceMap.computeIfAbsent(hidDevice.getPath(), _ -> new Device(hidDevice));
     }
 
     @Override
@@ -199,6 +199,10 @@ public final class DeviceManager implements HidServicesListener {
 
     public boolean connectDevice(Device device) {
         if (device != null) {
+            if (openedDevice == device.getHidDevice()) {
+                //do not reopen already open
+                return true;
+            }
             if (openedDevice != null) {
                 closeDevice(openedDevice);
             }

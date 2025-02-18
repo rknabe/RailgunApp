@@ -21,8 +21,6 @@ public class App {
 
         SwingUtilities.invokeLater(() -> {
             try {
-                //com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMonokaiProIJTheme.setup();
-                //com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme.setup();
                 com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme.setup();
                 JFrame frame = new JFrame("RKADE Gun Config");
                 MainForm mainForm = new MainForm();

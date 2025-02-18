@@ -43,7 +43,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JRadioButton rbFull;
     private JRadioButton rbMed;
     private JButton btnUpdate;
-    private ButtonGroup recoilStrengthGroup = new ButtonGroup();
     private Device device = null;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
@@ -84,6 +83,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         playerNumFormatter.setCommitsOnValidEdit(true);
         spPlayerNum.setEditor(playerNumEditor);
 
+        ButtonGroup recoilStrengthGroup = new ButtonGroup();
         recoilStrengthGroup.add(rbFull);
         recoilStrengthGroup.add(rbMed);
 
@@ -96,6 +96,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         btnConnect.setEnabled(true);
         deviceList.setEnabled(true);
         statusLabel.setForeground(Color.YELLOW);
+        btnConnect.setEnabled(false);
     }
 
     public void setDeviceManager(DeviceManager deviceManager) {
@@ -159,16 +160,18 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
             }
         }
         if (e.getActionCommand().equals(btnConnect.getActionCommand())) {
+            btnConnect.setEnabled(false);
             return deviceManager.connectDevice((Device) deviceList.getSelectedItem());
         } else if (e.getActionCommand().equals(deviceList.getActionCommand())) {
-            btnConnect.setEnabled(deviceList.getSelectedItem() != null);
+            Device selDevice = (Device) deviceList.getSelectedItem();
+            btnConnect.setEnabled(selDevice != null && selDevice != device);
         }
         return true;
     }
 
     private Timer getTimer(JDialog dialog, int delay) {
         final Timer timer = new Timer(delay, null);
-        ActionListener taskPerformer = e1 -> {
+        ActionListener taskPerformer = _ -> {
             isCalibrating = false;
             axisPanel.setCalibrating(false);
             dialog.setVisible(false);
@@ -240,7 +243,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         statusLabel.setForeground(Color.GREEN);
         buttonsPanel.deviceConnected(device);
         devicePanel.setEnabled(true);//these should always be enabled
-        btnConnect.setEnabled(true);
+        btnConnect.setEnabled(false);
         deviceList.setEnabled(true);
     }
 
