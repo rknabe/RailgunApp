@@ -43,6 +43,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JRadioButton rbFull;
     private JRadioButton rbMed;
     private JButton btnUpdate;
+    private JCheckBox cbInvertAxis;
     private Device device = null;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
@@ -57,7 +58,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate);
+                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate, cbInvertAxis);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -149,8 +150,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 return status;
             } else if (e.getActionCommand().equals(cbAutoRecoil.getActionCommand())) {
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
+            } else if (e.getActionCommand().equals(cbInvertAxis.getActionCommand())) {
+                return device.setInvertAxis(cbInvertAxis.isSelected());
             } else if (e.getActionCommand().equals(rbFull.getActionCommand()) || e.getActionCommand().equals(rbMed.getActionCommand())) {
-                return device.setRecoilStrength(rbFull.isSelected() ? 255 : 180);
+                return device.setRecoilStrength(rbFull.isSelected() ? 255 : 200);
             } else if (e.getActionCommand().equals(btnUpdate.getActionCommand())) {
                 FirmwareDialog dialog = new FirmwareDialog(deviceManager.getConnectedDevice());
                 dialog.pack();
@@ -278,6 +281,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                         axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
                         axisPanel.setYAxisMaximum(settings.getYAxisMaximum());
                         cbAutoRecoil.setSelected(settings.isAutoRecoil());
+                        cbInvertAxis.setSelected(settings.isInvertAxis());
                         spAutoTriggerSpeed.getModel().setValue(settings.getTriggerRepeatDelay());
                         spTriggerHold.getModel().setValue(settings.getTriggerHoldTime());
                         spPlayerNum.getModel().setValue(settings.getPlayerNumber());

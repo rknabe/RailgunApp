@@ -20,6 +20,7 @@ public class Device {
     public static final byte CMD_SET_UNIQUE_ID = 6;
     public static final byte CMD_SET_PLAYER_NUMBER = 11;
     public static final byte CMD_SET_RECOIL_STRENGTH = 12;
+    public static final byte CMD_SET_INVERT_AXIS = 13;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
@@ -92,6 +93,10 @@ public class Device {
 
     public synchronized boolean setAutoRecoil(boolean state) {
         return sendCommand(CMD_SET_AUTO_RECOIL, state);
+    }
+
+    public boolean setInvertAxis(boolean state) {
+        return sendCommand(CMD_SET_INVERT_AXIS, state);
     }
 
     public synchronized boolean setAxisLimits(short xMinValue, short xMaxValue, short yMinValue, short yMaxValue) {

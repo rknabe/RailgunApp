@@ -15,6 +15,7 @@ public final class SettingsDataReport extends DataReport {
     private final short playerNumber;
     private final int recoilStrength;
     private final boolean useDisplay;
+    private final boolean invertAxis;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -31,6 +32,7 @@ public final class SettingsDataReport extends DataReport {
   int8_t recoilStrength;
   bool autoRecoil;
   bool useDisplay;
+  bool invertAxis;
         */
         deviceType = getString(buffer, 10).trim();
         deviceVersion = getString(buffer, 6).trim();
@@ -44,6 +46,11 @@ public final class SettingsDataReport extends DataReport {
         recoilStrength = (buffer.get() & 0xFF);
         autoRecoil = buffer.get() > 0;
         useDisplay = buffer.get() > 0;
+        if (buffer.hasRemaining()) {
+            invertAxis = buffer.get() > 0;
+        } else {
+            invertAxis = false;
+        }
     }
 
     public short getTriggerHoldTime() {
@@ -92,5 +99,9 @@ public final class SettingsDataReport extends DataReport {
 
     public int getRecoilStrength() {
         return recoilStrength;
+    }
+
+    public boolean isInvertAxis() {
+        return invertAxis;
     }
 }

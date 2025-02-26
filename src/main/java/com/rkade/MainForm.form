@@ -244,6 +244,15 @@
                       <text value="Medium"/>
                     </properties>
                   </component>
+                  <hspacer id="ebd91">
+                    <constraints/>
+                  </hspacer>
+                  <component id="890c1" class="javax.swing.JCheckBox" binding="cbInvertAxis">
+                    <constraints/>
+                    <properties>
+                      <text value="Invert X/Y Axis"/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
             </children>
