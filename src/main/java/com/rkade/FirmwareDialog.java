@@ -107,6 +107,7 @@ public class FirmwareDialog extends JDialog {
         try {
             String versionFileName = DIR_TEMP + FILE_VERSION;
             downloadToFile(FILE_FIRMWARE_URL, FILE_VERSION, versionFileName);
+            sleep(1000);
             String version = Files.readString(Path.of(versionFileName)).trim();
             txtOutput.append("Remote version:" + version + System.lineSeparator());
             txtOutput.append("Device version:" + device.getFirmwareVersion() + System.lineSeparator());
@@ -117,6 +118,14 @@ public class FirmwareDialog extends JDialog {
         } catch (Exception ex) {
             txtOutput.append(ex.toString());
             logger.warning(ex.toString());
+        }
+    }
+
+    private void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (Exception ex) {
+            logger.warning(ex.getMessage());
         }
     }
 
