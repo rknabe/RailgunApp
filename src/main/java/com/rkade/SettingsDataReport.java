@@ -16,6 +16,8 @@ public final class SettingsDataReport extends DataReport {
     private final int recoilStrength;
     private final boolean useDisplay;
     private final boolean invertAxis;
+    private final int gunLightType;
+    private final boolean recoilSwitchIsToggle;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -33,6 +35,7 @@ public final class SettingsDataReport extends DataReport {
   bool autoRecoil;
   bool useDisplay;
   bool invertAxis;
+  int8_t gunLightType;
         */
         deviceType = getString(buffer, 10).trim();
         deviceVersion = getString(buffer, 6).trim();
@@ -50,6 +53,16 @@ public final class SettingsDataReport extends DataReport {
             invertAxis = buffer.get() > 0;
         } else {
             invertAxis = false;
+        }
+        if (buffer.hasRemaining()) {
+            recoilSwitchIsToggle = buffer.get() > 0;
+        } else {
+            recoilSwitchIsToggle = false;
+        }
+        if (buffer.hasRemaining()) {
+            gunLightType = buffer.get();
+        } else {
+            gunLightType = Device.GUN_LIGHT_TYPE_SINGLE;
         }
     }
 
@@ -103,5 +116,13 @@ public final class SettingsDataReport extends DataReport {
 
     public boolean isInvertAxis() {
         return invertAxis;
+    }
+
+    public int getGunLightType() {
+        return gunLightType;
+    }
+
+    public boolean isRecoilSwitchIsToggle() {
+        return recoilSwitchIsToggle;
     }
 }

@@ -25,8 +25,13 @@ public class Device {
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
     public static final byte CMD_RECOIL = 19;
+    public static final byte CMD_SET_GUN_LIGHT_TYPE = 20;
+    public static final byte CMD_SET_RECOIL_SWITCH_TYPE = 21;
     public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId!";
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
+    public static final int GUN_LIGHT_TYPE_NONE = 0;
+    public static final int GUN_LIGHT_TYPE_SINGLE = 1;
+    public static final int GUN_LIGHT_TYPE_RGB = 2;
     public static final int ESP32_VID = 0x303A;
     public static final int ESP32_PID = 0x8234;
     public static final int ESP32_JTAG_PID = 0x1001;
@@ -125,6 +130,14 @@ public class Device {
 
     public boolean setRecoilStrength(int i) {
         return sendCommand(CMD_SET_RECOIL_STRENGTH, (byte) i);
+    }
+
+    public boolean setGunLightType(int i) {
+        return sendCommand(CMD_SET_GUN_LIGHT_TYPE, (byte) i);
+    }
+
+    public boolean setRecoilSwitchIsToggle(boolean state) {
+        return sendCommand(CMD_SET_RECOIL_SWITCH_TYPE, state);
     }
 
     private boolean sendCommand(byte command) {

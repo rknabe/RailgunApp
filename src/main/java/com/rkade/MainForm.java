@@ -44,6 +44,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JRadioButton rbMed;
     private JButton btnUpdate;
     private JCheckBox cbInvertAxis;
+    private JLabel lblGunLightType;
+    private JComboBox<String> cbGunLightType;
+    private JCheckBox cbRecoilToggle;
     private Device device = null;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
@@ -57,8 +60,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     }
 
     public MainForm() {
-        controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate, cbInvertAxis);
+        controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil, spAutoTriggerSpeed,
+                spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate, cbInvertAxis, cbGunLightType,
+                cbRecoilToggle);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -89,6 +93,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         recoilStrengthGroup.add(rbMed);
 
         deviceList.setModel(deviceListModel);
+
+        cbGunLightType.addItem("None");
+        cbGunLightType.addItem("Single");
+        cbGunLightType.addItem("RGB");
 
         axisPanelParent.add(axisPanel);
         setupControlListener();
@@ -150,6 +158,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 return status;
             } else if (e.getActionCommand().equals(cbAutoRecoil.getActionCommand())) {
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
+            } else if (e.getActionCommand().equals(cbGunLightType.getActionCommand())) {
+                return device.setGunLightType(cbGunLightType.getSelectedIndex());
+            } else if (e.getActionCommand().equals(cbRecoilToggle.getActionCommand())) {
+                return device.setRecoilSwitchIsToggle(cbRecoilToggle.isSelected());
             } else if (e.getActionCommand().equals(cbInvertAxis.getActionCommand())) {
                 return device.setInvertAxis(cbInvertAxis.isSelected());
             } else if (e.getActionCommand().equals(rbFull.getActionCommand()) || e.getActionCommand().equals(rbMed.getActionCommand())) {
@@ -240,7 +252,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     @Override
     public void deviceConnected(Device device) {
         this.device = device;
-        firmwareLabel.setText(device.getFirmwareType() + ":" + device.getFirmwareVersion());
+        firmwareLabel.setText("Firmware: " + device.getFirmwareType() + ":" + device.getFirmwareVersion());
         setPanelEnabled(true);
         statusLabel.setText("Connected");
         statusLabel.setForeground(Color.GREEN);
@@ -275,7 +287,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     case ButtonsDataReport buttonsData -> buttonsPanel.deviceUpdated(device, status, buttonsData);
                     case SettingsDataReport settings -> {
                         lastSettings = settings;
-                        firmwareLabel.setText(settings.getDeviceType() + ":" + settings.getDeviceVersion());
+                        firmwareLabel.setText("Firmware: " + settings.getDeviceType() + ":" + settings.getDeviceVersion());
                         axisPanel.setXAxisMinimum(settings.getXAxisMinimum());
                         axisPanel.setXAxisMaximum(settings.getXAxisMaximum());
                         axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
@@ -289,6 +301,12 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                             rbMed.setSelected(true);
                         } else {
                             rbFull.setSelected(true);
+                        }
+                        if (settings.getGunLightType() != cbGunLightType.getSelectedIndex()) {
+                            cbGunLightType.setSelectedIndex(settings.getGunLightType());
+                        }
+                        if (settings.isRecoilSwitchIsToggle() != cbRecoilToggle.isSelected()) {
+                            cbRecoilToggle.setSelected(settings.isRecoilSwitchIsToggle());
                         }
                     }
                     case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
