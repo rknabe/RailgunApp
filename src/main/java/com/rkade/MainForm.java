@@ -127,7 +127,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     btnCalibrate.setEnabled(false);
                     isCalibrating = true;
                     //set limits to max before calibrating
-                    device.setAxisLimits(Byte.MIN_VALUE, Byte.MAX_VALUE, Byte.MIN_VALUE, Byte.MAX_VALUE);
+                    device.setAxisLimits(Device.AXIS_MIN, Device.AXIS_MAX, Device.AXIS_MIN, Device.AXIS_MAX);
                     btnCalibrate.setText("Calibrating...");
                     axisPanel.setCalibrating(true);
                     JLabel validator = new JLabel("<html><body>Please move the crosshair to each corner." +
@@ -205,10 +205,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         short yMin = axisPanel.getYAxisMinimum();
         short yMax = axisPanel.getYAxisMaximum();
 
-        short nxMin = (short) axisPanel.normalize(xMin, Byte.MIN_VALUE, Byte.MAX_VALUE, Byte.MIN_VALUE, Byte.MAX_VALUE);
-        short nxMax = (short) axisPanel.normalize(xMax, Byte.MIN_VALUE, Byte.MAX_VALUE, Byte.MIN_VALUE, Byte.MAX_VALUE);
-        short nyMin = (short) axisPanel.normalize(yMin, Byte.MIN_VALUE, Byte.MAX_VALUE, Byte.MIN_VALUE, Byte.MAX_VALUE);
-        short nyMax = (short) axisPanel.normalize(yMax, Byte.MIN_VALUE, Byte.MAX_VALUE, Byte.MIN_VALUE, Byte.MAX_VALUE);
+        short nxMin = (short) axisPanel.normalize(xMin, Device.AXIS_MIN, Device.AXIS_MAX, Device.AXIS_MIN, Device.AXIS_MAX);
+        short nxMax = (short) axisPanel.normalize(xMax, Device.AXIS_MIN, Device.AXIS_MAX, Device.AXIS_MIN, Device.AXIS_MAX);
+        short nyMin = (short) axisPanel.normalize(yMin, Device.AXIS_MIN, Device.AXIS_MAX, Device.AXIS_MIN, Device.AXIS_MAX);
+        short nyMax = (short) axisPanel.normalize(yMax, Device.AXIS_MIN, Device.AXIS_MAX, Device.AXIS_MIN, Device.AXIS_MAX);
 
         boolean sent = device.setAxisLimits(nxMin, nxMax, nyMin, nyMax);
         if (!sent) {

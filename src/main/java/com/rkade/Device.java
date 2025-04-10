@@ -10,6 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 public class Device {
+    public static final  short AXIS_MIN = 0;
+    public static final  short AXIS_MAX = 127;
     public static final byte CMD_GET_FEATURE = 2;
     public static final byte CMD_GET_STATE = 3;
     public static final byte CMD_VENDOR = 6;

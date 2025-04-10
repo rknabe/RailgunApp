@@ -9,16 +9,16 @@ import java.awt.event.ActionListener;
 
 public class AxisPanel extends JPanel implements DeviceListener, ActionListener, ChangeListener {
     private final Image target;
-    private short xAxisMinimum = Byte.MIN_VALUE;
-    private short xAxisMaximum = Byte.MAX_VALUE;
-    private short yAxisMinimum = Byte.MIN_VALUE;
-    private short yAxisMaximum = Byte.MAX_VALUE;
+    private short xAxisMinimum = Device.AXIS_MIN;
+    private short xAxisMaximum = Device.AXIS_MAX;
+    private short yAxisMinimum = Device.AXIS_MIN;
+    private short yAxisMaximum = Device.AXIS_MAX;
     private short x = 0, y = 0;
     private boolean isCalibrating = false;
-    private short xMax = Byte.MAX_VALUE;
-    private short xMin = Byte.MIN_VALUE;
-    private short yMax = Byte.MAX_VALUE;
-    private short yMin = Byte.MIN_VALUE;
+    private short xMin = Device.AXIS_MIN;
+    private short xMax = Device.AXIS_MAX;
+    private short yMin = Device.AXIS_MIN;
+    private short yMax = Device.AXIS_MAX;
     private int targetWidth = 0;
     private int targetHeight = 0;
 
@@ -112,11 +112,10 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     public void setCalibrating(boolean calibrating) {
         isCalibrating = calibrating;
         if (isCalibrating) {
-            xMin = Byte.MAX_VALUE;
-            xMax = Byte.MIN_VALUE;
-            yMin = Byte.MAX_VALUE;
-            yMax = Byte.MIN_VALUE;
-            ;
+            xMin = Device.AXIS_MAX;
+            xMax = Device.AXIS_MIN;
+            yMin = Device.AXIS_MAX;
+            yMax = Device.AXIS_MIN;
         } else {
             xAxisMinimum = xMin;
             xAxisMaximum = xMax;
