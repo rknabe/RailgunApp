@@ -39,6 +39,7 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     }
 
     private void updateControls(AxisDataReport axisDataReport) {
+        //System.out.println("x:" + axisDataReport.getX() + " y:" + axisDataReport.getY());
         setAxisValues(axisDataReport.getX(), axisDataReport.getY());
     }
 
@@ -51,8 +52,8 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
             targetWidth = target.getWidth(null);
             targetHeight = target.getHeight(null);
         }
-        int nx = normalize(x, xAxisMinimum, xAxisMaximum, -targetWidth / 2, w - targetWidth / 2);
-        int ny = normalize(y, yAxisMinimum, yAxisMaximum, -targetWidth / 2, h - targetHeight / 2);
+        int nx = normalize(x, Device.AXIS_MIN, Device.AXIS_MAX, -targetWidth / 2, w - targetWidth / 2);
+        int ny = normalize(y, Device.AXIS_MIN, Device.AXIS_MAX, -targetWidth / 2, h - targetHeight / 2);
         g.drawImage(target, nx, ny, null);
     }
 

@@ -113,7 +113,7 @@
         </children>
       </grid>
       <grid id="d7650" binding="northPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="North"/>
+        <constraints border-constraint="Center"/>
         <properties>
           <minimumSize width="770" height="600"/>
           <preferredSize width="770" height="600"/>
@@ -121,9 +121,10 @@
         <border type="none"/>
         <children>
           <grid id="c158b" binding="axisPanelParent" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints border-constraint="North"/>
+            <constraints border-constraint="Center"/>
             <properties>
               <autoscrolls value="false"/>
+              <maximumSize width="800" height="540"/>
               <minimumSize width="800" height="540"/>
               <preferredSize width="800" height="540"/>
             </properties>
@@ -281,7 +282,7 @@
             </children>
           </grid>
           <nested-form id="63a6a" form-file="com/rkade/ButtonsPanel.form" binding="buttonsPanel">
-            <constraints border-constraint="South"/>
+            <constraints border-constraint="Last"/>
           </nested-form>
         </children>
       </grid>
