@@ -43,11 +43,16 @@ public final class DeviceManager implements HidServicesListener {
             if (open) {
                 byte[] reportData = new byte[64];
                 sleep(40);
-                hidDevice.getFeatureReport(reportData, Device.CMD_VENDOR);
-                sleep(500);
-                byte[] data = hidDevice.readAll(6);
-                if (data.length > 0) {
-                    onInputReport(hidDevice, data);
+                for (int i = 0; i < 50; i++) {
+                    hidDevice.getFeatureReport(reportData, Device.CMD_VENDOR);
+                    sleep(100);
+                    byte[] data = hidDevice.readAll(6);
+                    if (data.length > 0) {
+                        boolean handled = handleInputReport(hidDevice, data);
+                        if (handled) {
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -80,11 +85,16 @@ public final class DeviceManager implements HidServicesListener {
     }
 
     public void onInputReport(HidDevice hidDevice, byte[] data) {
+        handleInputReport(hidDevice, data);
+    }
+
+    private boolean handleInputReport(HidDevice hidDevice, byte[] data) {
         byte id = data[0];
         if (id == Device.CMD_VENDOR) {
             byte reportType = data[1];
             List<DataReport> reports = DataReportFactory.create(reportType, data);
             Device device = getDevice(hidDevice);
+
             for (DataReport report : reports) {
                 if (report instanceof SettingsDataReport settings) {
                     SettingsDataReport prevSettings = deviceSettings.get(device);
@@ -113,10 +123,12 @@ public final class DeviceManager implements HidServicesListener {
                 } else {
                     notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
                 }
+                return true;
             }
         } else {
             logger.warning("Got unexpected reported type:" + id);
         }
+        return false;
     }
 
     private void notifyListenersDeviceAttached(Device device) {
