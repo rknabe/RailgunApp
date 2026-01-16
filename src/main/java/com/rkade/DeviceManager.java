@@ -42,10 +42,10 @@ public final class DeviceManager implements HidServicesListener {
             boolean open = hidDevice.open();
             if (open) {
                 byte[] reportData = new byte[64];
-                sleep(40);
-                for (int i = 0; i < 50; i++) {
+                sleep(50);
+                for (int i = 0; i < 75; i++) {
                     hidDevice.getFeatureReport(reportData, Device.CMD_VENDOR);
-                    sleep(100);
+                    sleep(50);
                     byte[] data = hidDevice.readAll(6);
                     if (data.length > 0) {
                         boolean handled = handleInputReport(hidDevice, data);
@@ -125,8 +125,6 @@ public final class DeviceManager implements HidServicesListener {
                 }
                 return true;
             }
-        } else {
-            logger.warning("Got unexpected reported type:" + id);
         }
         return false;
     }

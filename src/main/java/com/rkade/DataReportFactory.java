@@ -13,8 +13,8 @@ public abstract class DataReportFactory {
             ByteBuffer buffer = ByteBuffer.allocate(data.length).order(ByteOrder.LITTLE_ENDIAN);
             buffer.put(data);
             buffer.rewind();
-            byte dataType = buffer.get(); //read past the data type first byte
-            byte type = buffer.get(); //read past the data type first byte
+            buffer.get(); //read past the data type first byte
+            buffer.get(); //read past the data type first byte
 
             if (reportType == Device.CMD_GET_FEATURE) {
                 reports.add(new SettingsDataReport(reportType, buffer));
