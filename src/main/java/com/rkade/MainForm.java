@@ -62,7 +62,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil, spAutoTriggerSpeed,
                 spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate, cbInvertAxis, cbGunLightType,
-                cbRecoilToggle);
+                cbRecoilToggle, lblRecoilStrength, lblAutoTrigger, lblTriggerHold, lblPlayerNum, lblGunLightType);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -241,6 +241,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         }
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
+        btnConnect.requestFocus();
         deviceList.setEnabled(true);
     }
 

@@ -43,9 +43,9 @@ public final class DeviceManager implements HidServicesListener {
             if (open) {
                 byte[] reportData = new byte[64];
                 sleep(50);
-                for (int i = 0; i < 75; i++) {
+                for (int i = 0; i < 250; i++) {
                     hidDevice.getFeatureReport(reportData, Device.CMD_VENDOR);
-                    sleep(50);
+                    sleep(20);
                     byte[] data = hidDevice.readAll(6);
                     if (data.length > 0) {
                         boolean handled = handleInputReport(hidDevice, data);

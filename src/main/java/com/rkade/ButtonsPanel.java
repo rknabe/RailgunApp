@@ -34,7 +34,7 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     public ButtonsPanel() {
-        controls = List.of();
+        controls = List.of(lblButtons);
         switchButtons = List.of(button1, button2, button3, button4, button5, button6, button7, button8);
 
         setPanelEnabled(false);

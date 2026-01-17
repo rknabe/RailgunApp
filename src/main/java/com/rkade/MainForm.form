@@ -15,19 +15,20 @@
         <properties>
           <autoscrolls value="false"/>
           <maximumSize width="1000" height="100"/>
-          <minimumSize width="800" height="83"/>
-          <preferredSize width="800" height="83"/>
+          <minimumSize width="800" height="44"/>
+          <preferredSize width="800" height="87"/>
         </properties>
         <border type="bevel-raised"/>
         <children>
           <grid id="6d238" binding="devicePanel" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="1">
             <constraints/>
             <properties>
-              <minimumSize width="800" height="40"/>
-              <preferredSize width="800" height="40"/>
+              <maximumSize width="5012" height="43"/>
+              <minimumSize width="800" height="43"/>
+              <preferredSize width="800" height="43"/>
               <verifyInputWhenFocusTarget value="false"/>
             </properties>
-            <border type="etched"/>
+            <border type="none"/>
             <children>
               <component id="d1d5f" class="javax.swing.JComboBox" binding="deviceList">
                 <constraints/>
@@ -115,8 +116,9 @@
       <grid id="d7650" binding="northPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
         <properties>
-          <minimumSize width="770" height="600"/>
-          <preferredSize width="770" height="600"/>
+          <maximumSize width="800" height="540"/>
+          <minimumSize width="800" height="540"/>
+          <preferredSize width="800" height="540"/>
         </properties>
         <border type="none"/>
         <children>
@@ -124,6 +126,7 @@
             <constraints border-constraint="Center"/>
             <properties>
               <autoscrolls value="false"/>
+              <focusable value="false"/>
               <maximumSize width="800" height="540"/>
               <minimumSize width="800" height="540"/>
               <preferredSize width="800" height="540"/>
@@ -133,11 +136,11 @@
               <grid id="a1a7d" binding="settingsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="South"/>
                 <properties>
-                  <maximumSize width="780" height="75"/>
-                  <minimumSize width="780" height="75"/>
-                  <preferredSize width="780" height="75"/>
+                  <maximumSize width="780" height="80"/>
+                  <minimumSize width="780" height="40"/>
+                  <preferredSize width="780" height="80"/>
                 </properties>
-                <border type="bevel-raised"/>
+                <border type="line"/>
                 <children>
                   <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
                     <constraints/>
@@ -260,7 +263,7 @@
                   <component id="af8e8" class="javax.swing.JLabel" binding="lblGunLightType">
                     <constraints/>
                     <properties>
-                      <text value="Gun Light Type"/>
+                      <text value="Light Type"/>
                     </properties>
                   </component>
                   <component id="d19e5" class="javax.swing.JComboBox" binding="cbGunLightType">
