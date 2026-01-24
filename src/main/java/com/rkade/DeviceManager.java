@@ -123,8 +123,8 @@ public final class DeviceManager implements HidServicesListener {
                 } else {
                     notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
                 }
-                return true;
             }
+            return true;
         }
         return false;
     }
