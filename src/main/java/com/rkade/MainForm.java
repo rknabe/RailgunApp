@@ -97,6 +97,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         cbGunLightType.addItem("None");
         cbGunLightType.addItem("Single");
         cbGunLightType.addItem("RGB");
+        cbGunLightType.addItem("AlwaysOn");
 
         axisPanelParent.add(axisPanel);
         setupControlListener();

@@ -34,6 +34,7 @@ public class Device {
     public static final int GUN_LIGHT_TYPE_NONE = 0;
     public static final int GUN_LIGHT_TYPE_SINGLE = 1;
     public static final int GUN_LIGHT_TYPE_RGB = 2;
+    public static final int GUN_LIGHT_TYPE_ALWAYS = 3;
     public static final int ESP32_VID = 0x303A;
     public static final int ESP32_PID = 0x8234;
     public static final int ESP32_JTAG_PID = 0x1001;
