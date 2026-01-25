@@ -10,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 public class Device {
-    public static final  short AXIS_MIN = 0;
-    public static final  short AXIS_MAX = 127;
+    public static final short AXIS_MIN = 0;
+    public static final short AXIS_MAX = 127;
     public static final byte CMD_GET_FEATURE = 2;
     public static final byte CMD_GET_STATE = 3;
     public static final byte CMD_VENDOR = 6;
@@ -29,6 +29,7 @@ public class Device {
     public static final byte CMD_RECOIL = 19;
     public static final byte CMD_SET_GUN_LIGHT_TYPE = 20;
     public static final byte CMD_SET_RECOIL_SWITCH_TYPE = 21;
+    public static final byte CMD_SET_BUTTON_ACTION = 22;
     public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId!";
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
     public static final int GUN_LIGHT_TYPE_NONE = 0;
@@ -141,6 +142,10 @@ public class Device {
 
     public boolean setRecoilSwitchIsToggle(boolean state) {
         return sendCommand(CMD_SET_RECOIL_SWITCH_TYPE, state);
+    }
+
+    public boolean setButtonAction(int button, int action) {
+        return sendCommand(CMD_SET_BUTTON_ACTION, (short) button, (short) action, (short) 0, (short) 0);
     }
 
     private boolean sendCommand(byte command) {

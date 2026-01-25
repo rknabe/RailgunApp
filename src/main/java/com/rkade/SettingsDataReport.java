@@ -18,6 +18,9 @@ public final class SettingsDataReport extends DataReport {
     private final boolean invertAxis;
     private final int gunLightType;
     private final boolean recoilSwitchIsToggle;
+    private final ButtonAction button6Action;
+    private final ButtonAction button7Action;
+    private final ButtonAction button8Action;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -35,7 +38,11 @@ public final class SettingsDataReport extends DataReport {
   bool autoRecoil;
   bool useDisplay;
   bool invertAxis;
+  bool recoilSwitchToggle;  //is toggle or momentary switch
   int8_t gunLightType;
+  int8_t btn6Action;
+  int8_t btn7Action;
+  int8_t btn8Action;
         */
         deviceType = getString(buffer, 10).trim();
         deviceVersion = getString(buffer, 6).trim();
@@ -63,6 +70,15 @@ public final class SettingsDataReport extends DataReport {
             gunLightType = buffer.get();
         } else {
             gunLightType = Device.GUN_LIGHT_TYPE_SINGLE;
+        }
+        if (buffer.hasRemaining()) {
+            button6Action = ButtonAction.from(buffer.get());
+            button7Action = ButtonAction.from(buffer.get());
+            button8Action = ButtonAction.from(buffer.get());
+        } else {
+            button6Action = ButtonAction.ESCAPE;
+            button7Action = ButtonAction.SHUTDOWN;
+            button8Action = ButtonAction.RECOIL_TOGGLE;
         }
     }
 
@@ -124,5 +140,17 @@ public final class SettingsDataReport extends DataReport {
 
     public boolean isRecoilSwitchIsToggle() {
         return recoilSwitchIsToggle;
+    }
+
+    public ButtonAction getButton6Action() {
+        return button6Action;
+    }
+
+    public ButtonAction getButton7Action() {
+        return button7Action;
+    }
+
+    public ButtonAction getButton8Action() {
+        return button8Action;
     }
 }
