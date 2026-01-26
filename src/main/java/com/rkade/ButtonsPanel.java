@@ -24,6 +24,7 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     private JButton button6;
     private JButton button7;
     private JButton button8;
+    private JButton button9;
     private JLabel lblButtons;
     private JPanel actionPanel;
     private JComboBox<String> cbActionBtn6;
@@ -46,7 +47,7 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     public ButtonsPanel() {
         controls = List.of(lblButtons, actionPanel, lblActionBtn6, lblActionBtn7, lblActionBtn8, lblActionBtn9,
                 cbActionBtn6, cbActionBtn7, cbActionBtn8, cbActionBtn9);
-        switchButtons = List.of(button1, button2, button3, button4, button5, button6, button7, button8);
+        switchButtons = List.of(button1, button2, button3, button4, button5, button6, button7, button8, button9);
         actionButtons = List.of(cbActionBtn6, cbActionBtn7, cbActionBtn8, lblActionBtn6, lblActionBtn7,
                 lblActionBtn8, lblActionBtn9, cbActionBtn9);
 
