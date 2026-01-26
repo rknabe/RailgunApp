@@ -310,6 +310,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                         if (settings.isRecoilSwitchIsToggle() != cbRecoilToggle.isSelected()) {
                             cbRecoilToggle.setSelected(settings.isRecoilSwitchIsToggle());
                         }
+                        buttonsPanel.deviceUpdated(device, status, settings);
                     }
                     case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
                     default -> {

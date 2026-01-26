@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class ButtonsPanel extends BaseForm implements DeviceListener, ActionListener, FocusListener, ChangeListener {
     private final static Logger logger = Logger.getLogger(ButtonsPanel.class.getName());
     private final List<JButton> switchButtons;
+    private final List<JComponent> actionButtons;
     private JPanel mainButtonPanel;
     private JPanel topPanel;
     private JButton button1;
@@ -24,6 +25,15 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     private JButton button7;
     private JButton button8;
     private JLabel lblButtons;
+    private JPanel actionPanel;
+    private JComboBox<String> cbActionBtn6;
+    private JLabel lblActionBtn6;
+    private JComboBox<String> cbActionBtn7;
+    private JLabel lblActionBtn7;
+    private JComboBox<String> cbActionBtn8;
+    private JLabel lblActionBtn8;
+    private JComboBox<String> cbActionBtn9;
+    private JLabel lblActionBtn9;
     private Device device = null;
 
     {
@@ -34,11 +44,19 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     public ButtonsPanel() {
-        controls = List.of(lblButtons);
+        controls = List.of(lblButtons, actionPanel, lblActionBtn6, lblActionBtn7, lblActionBtn8, lblActionBtn9,
+                cbActionBtn6, cbActionBtn7, cbActionBtn8, cbActionBtn9);
         switchButtons = List.of(button1, button2, button3, button4, button5, button6, button7, button8);
+        actionButtons = List.of(cbActionBtn6, cbActionBtn7, cbActionBtn8, lblActionBtn6, lblActionBtn7,
+                lblActionBtn8, lblActionBtn9, cbActionBtn9);
 
         setPanelEnabled(false);
         setupControlListener();
+
+        cbActionBtn6.setModel(new DefaultComboBoxModel<>(ButtonAction.getStringValues()));
+        cbActionBtn7.setModel(new DefaultComboBoxModel<>(ButtonAction.getStringValues()));
+        cbActionBtn8.setModel(new DefaultComboBoxModel<>(ButtonAction.getStringValues()));
+        cbActionBtn9.setModel(new DefaultComboBoxModel<>(ButtonAction.getStringValues()));
     }
 
     @Override
@@ -65,10 +83,24 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     public void deviceUpdated(Device device, String status, DataReport report) {
         if (report != null) {
             //if (report.getReportType() == Device.DATA_REPORT_ID) {
-                if (report instanceof ButtonsDataReport buttonsDataReport) {
-                    updateControls(buttonsDataReport);
-                }
+            if (report instanceof ButtonsDataReport buttonsDataReport) {
+                updateControls(buttonsDataReport);
+            } else if (report instanceof SettingsDataReport settingsDataReport) {
+                updateControls(settingsDataReport);
+            }
             //}
+        }
+    }
+
+    private void updateControls(SettingsDataReport settingsDataReport) {
+        if (device != null) {
+            setEnabled(actionButtons, true);
+            setSelectionIfNeeded(cbActionBtn6, settingsDataReport.getButton6Action().ordinal());
+            setSelectionIfNeeded(cbActionBtn7, settingsDataReport.getButton7Action().ordinal());
+            setSelectionIfNeeded(cbActionBtn8, settingsDataReport.getButton8Action().ordinal());
+            setSelectionIfNeeded(cbActionBtn9, settingsDataReport.getButton9Action().ordinal());
+        } else {
+            setEnabled(actionButtons, false);
         }
     }
 
@@ -91,6 +123,15 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     private boolean handleAction(ActionEvent e) {
+        if (e.getActionCommand().equals(cbActionBtn6.getActionCommand())) {
+            return device.setButtonAction((short) 6, (byte) cbActionBtn6.getSelectedIndex());
+        } else if (e.getActionCommand().equals(cbActionBtn7.getActionCommand())) {
+            return device.setButtonAction((short) 7, (byte) cbActionBtn7.getSelectedIndex());
+        } else if (e.getActionCommand().equals(cbActionBtn8.getActionCommand())) {
+            return device.setButtonAction((short) 8, (byte) cbActionBtn8.getSelectedIndex());
+        } else if (e.getActionCommand().equals(cbActionBtn9.getActionCommand())) {
+            return device.setButtonAction((short) 9, (byte) cbActionBtn9.getSelectedIndex());
+        }
         return true;
     }
 

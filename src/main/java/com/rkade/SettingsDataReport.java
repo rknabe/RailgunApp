@@ -21,6 +21,7 @@ public final class SettingsDataReport extends DataReport {
     private final ButtonAction button6Action;
     private final ButtonAction button7Action;
     private final ButtonAction button8Action;
+    private final ButtonAction button9Action;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -75,10 +76,12 @@ public final class SettingsDataReport extends DataReport {
             button6Action = ButtonAction.from(buffer.get());
             button7Action = ButtonAction.from(buffer.get());
             button8Action = ButtonAction.from(buffer.get());
+            button9Action = ButtonAction.from(buffer.get());
         } else {
             button6Action = ButtonAction.ESCAPE;
             button7Action = ButtonAction.SHUTDOWN;
             button8Action = ButtonAction.RECOIL_TOGGLE;
+            button9Action = ButtonAction.PAUSE;
         }
     }
 
@@ -152,5 +155,9 @@ public final class SettingsDataReport extends DataReport {
 
     public ButtonAction getButton8Action() {
         return button8Action;
+    }
+
+    public ButtonAction getButton9Action() {
+        return button9Action;
     }
 }
