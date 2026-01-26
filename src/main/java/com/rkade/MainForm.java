@@ -249,6 +249,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     @Override
     public void deviceDetached(Device device) {
         deviceListModel.removeElement(device);
+        deviceDisconnected(device);
     }
 
     @Override

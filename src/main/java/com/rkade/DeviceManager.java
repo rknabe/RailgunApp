@@ -41,18 +41,20 @@ public final class DeviceManager implements HidServicesListener {
         if (hidDevice.getVendorId() == Device.ESP32_VID && hidDevice.getProductId() == Device.ESP32_PID) {
             boolean open = hidDevice.open();
             if (open) {
+                sleep(10);
                 byte[] reportData = new byte[64];
-                sleep(50);
-                for (int i = 0; i < 250; i++) {
-                    hidDevice.getFeatureReport(reportData, Device.CMD_VENDOR);
-                    sleep(20);
-                    byte[] data = hidDevice.readAll(6);
-                    if (data.length > 0) {
-                        boolean handled = handleInputReport(hidDevice, data);
-                        if (handled) {
-                            break;
+                for (int i = 0; i < 500; i++) {
+                    int size = hidDevice.getFeatureReport(reportData, Device.CMD_VENDOR);
+                    if (size > 0) {
+                        byte[] data = hidDevice.readAll(11);
+                        if (data.length > 0) {
+                            boolean handled = handleInputReport(hidDevice, data);
+                            if (handled) {
+                                break;
+                            }
                         }
                     }
+                    sleep(2);
                 }
             }
         }
