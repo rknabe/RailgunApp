@@ -33,7 +33,7 @@ public class FirmwareDialog extends JDialog {
     private final static String FILE_FIRMWARE_URL = "https://github.com/rknabe/RailgunApp/releases/download/Firmware/";
     private final static String DIR_TEMP = System.getProperty("java.io.tmpdir");
     private final static String EXE_ESP_TOOL = "esptool.exe";
-    private final static String updateCmd = "\"%s\" --chip esp32s3 --port \"%s\" --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode keep --flash_freq keep --flash_size keep 0x0 \"%s\" 0x8000 \"%s\" 0xe000 \"%s\" 0x10000 \"%s\"";
+    private final static String updateCmd = "\"%s\" --chip esp32s3 --port \"%s\" --baud 921600 --before default-reset --after hard-reset write-flash -z --flash-mode keep --flash-freq keep --flash-size keep 0x0 \"%s\" 0x8000 \"%s\" 0xe000 \"%s\" 0x10000 \"%s\"";
     private final static String bootBinFile = DIR_TEMP + FILE_BOOT_BIN;
     private final static String firmwareBinFile = DIR_TEMP + FILE_FIRMWARE_BIN;
     private final static String firmwareBootFile = DIR_TEMP + FILE_FIRMWARE_BOOT;
