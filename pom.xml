@@ -4,7 +4,7 @@
 
     <groupId>com.rkade</groupId>
     <artifactId>RKadeGunConfig</artifactId>
-    <version>1.1.4.0</version>
+    <version>1.1.5.0</version>
     <packaging>jar</packaging>
     <description>RKADE Gun Configuration Utility</description>
     <name>RKadeGunConfig</name>
@@ -15,8 +15,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
     </properties>
 
     <repositories>
@@ -40,12 +40,12 @@
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>3.7</version>
+            <version>3.7.1</version>
         </dependency>
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf-intellij-themes</artifactId>
-            <version>3.7</version>
+            <version>3.7.1</version>
         </dependency>
     </dependencies>
 
@@ -54,7 +54,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.6.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
