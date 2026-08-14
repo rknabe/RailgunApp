@@ -229,7 +229,7 @@
                   <component id="bc08c" class="javax.swing.JLabel" binding="lblRecoilStrength">
                     <constraints/>
                     <properties>
-                      <text value="Recoil Strength:"/>
+                      <text value="Recoil:"/>
                     </properties>
                   </component>
                   <component id="7937f" class="javax.swing.JRadioButton" binding="rbFull">
@@ -244,8 +244,8 @@
                     <constraints/>
                     <properties>
                       <actionCommand value="rbMed"/>
-                      <label value="Medium"/>
-                      <text value="Medium"/>
+                      <label value="Med"/>
+                      <text value="Med"/>
                     </properties>
                   </component>
                   <hspacer id="ebd91">
@@ -277,12 +277,20 @@
                   <component id="af8e8" class="javax.swing.JLabel" binding="lblGunLightType">
                     <constraints/>
                     <properties>
-                      <text value="Lite Type"/>
+                      <text value="Lite"/>
                     </properties>
                   </component>
                   <component id="d19e5" class="javax.swing.JComboBox" binding="cbGunLightType">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <actionCommand value="cbGunLightType"/>
+                    </properties>
+                  </component>
+                  <component id="76cb9" class="javax.swing.JComboBox" binding="cbBarrelLtColor">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="cbBarrelLtColor"/>
+                    </properties>
                   </component>
                   <hspacer id="60059">
                     <constraints/>

@@ -50,6 +50,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JLabel lblCoilCount;
     private JSpinner spCoils;
     private JCheckBox cbInvertYAxis;
+    private JComboBox<String> cbBarrelLtColor;
     private Device device = null;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
@@ -66,7 +67,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil, spAutoTriggerSpeed,
                 spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate, cbInvertXAxis, cbGunLightType,
                 cbRecoilToggle, lblRecoilStrength, lblAutoTrigger, lblTriggerHold, lblPlayerNum, lblGunLightType,
-                lblCoilCount, spCoils, cbInvertYAxis);
+                lblCoilCount, spCoils, cbInvertYAxis, cbBarrelLtColor);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -111,6 +112,16 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         cbGunLightType.addItem("RGB");
         cbGunLightType.addItem("AlwaysOn");
         cbGunLightType.addItem("ARGB");
+        cbGunLightType.addItem("ARGB-Single");
+
+        cbBarrelLtColor.addItem(BarrelLiteColor.RED.name());
+        cbBarrelLtColor.addItem(BarrelLiteColor.GREEN.name());
+        cbBarrelLtColor.addItem(BarrelLiteColor.BLUE.name());
+        cbBarrelLtColor.addItem(BarrelLiteColor.YELLOW.name());
+        cbBarrelLtColor.addItem(BarrelLiteColor.PURPLE.name());
+        cbBarrelLtColor.addItem(BarrelLiteColor.PINK.name());
+        cbBarrelLtColor.addItem(BarrelLiteColor.ORANGE.name());
+        cbBarrelLtColor.addItem(BarrelLiteColor.BROWN.name());
 
         axisPanelParent.add(axisPanel);
         setupControlListener();
@@ -174,6 +185,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
             } else if (e.getActionCommand().equals(cbGunLightType.getActionCommand())) {
                 return device.setGunLightType(cbGunLightType.getSelectedIndex());
+            } else if (e.getActionCommand().equals(cbBarrelLtColor.getActionCommand())) {
+                return device.setBarrelLtColor(cbBarrelLtColor.getSelectedIndex());
             } else if (e.getActionCommand().equals(cbRecoilToggle.getActionCommand())) {
                 return device.setRecoilSwitchIsToggle(cbRecoilToggle.isSelected());
             } else if (e.getActionCommand().equals(cbInvertXAxis.getActionCommand())) {
@@ -334,9 +347,13 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                         if (settings.getGunLightType() != cbGunLightType.getSelectedIndex()) {
                             cbGunLightType.setSelectedIndex(settings.getGunLightType());
                         }
+                        if (settings.getBarrelLtColor().getCode()!= cbBarrelLtColor.getSelectedIndex()) {
+                            cbBarrelLtColor.setSelectedIndex(settings.getBarrelLtColor().getCode());
+                        }
                         if (settings.isRecoilSwitchIsToggle() != cbRecoilToggle.isSelected()) {
                             cbRecoilToggle.setSelected(settings.isRecoilSwitchIsToggle());
                         }
+                        cbBarrelLtColor.setEnabled(cbGunLightType.getSelectedIndex() == 5);
                         buttonsPanel.deviceUpdated(device, status, settings);
                     }
                     case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);

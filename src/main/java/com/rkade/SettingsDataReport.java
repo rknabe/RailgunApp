@@ -24,6 +24,7 @@ public final class SettingsDataReport extends DataReport {
     private final ButtonAction button8Action;
     private final ButtonAction button9Action;
     private final short coilCount;
+    private final BarrelLiteColor barrelLtColor;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -89,9 +90,11 @@ public final class SettingsDataReport extends DataReport {
             coilCount = 1;
         }
         if (buffer.hasRemaining()) {
-            invertYAxis = buffer.getShort() > 0;
+            invertYAxis = buffer.get() > 0;
+            barrelLtColor = BarrelLiteColor.from(buffer.get());
         } else {
             invertYAxis = false;
+            barrelLtColor = BarrelLiteColor.GREEN;
         }
     }
 
@@ -177,5 +180,9 @@ public final class SettingsDataReport extends DataReport {
 
     public short getCoilCount() {
         return coilCount;
+    }
+
+    public BarrelLiteColor getBarrelLtColor() {
+        return barrelLtColor;
     }
 }
