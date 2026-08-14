@@ -212,7 +212,7 @@
                   <component id="ad6f5" class="javax.swing.JLabel" binding="lblPlayerNum">
                     <constraints/>
                     <properties>
-                      <labelFor value="7c924"/>
+                      <labelFor value="951b6"/>
                       <text value="Player #"/>
                     </properties>
                   </component>
@@ -251,19 +251,33 @@
                   <hspacer id="ebd91">
                     <constraints/>
                   </hspacer>
-                  <component id="890c1" class="javax.swing.JCheckBox" binding="cbInvertAxis">
+                  <component id="890c1" class="javax.swing.JCheckBox" binding="cbInvertXAxis">
                     <constraints/>
                     <properties>
-                      <text value="Invert X/Y Axis"/>
+                      <actionCommand value="Invert X"/>
+                      <contentAreaFilled value="false"/>
+                      <text value="Invert X"/>
                     </properties>
                   </component>
                   <hspacer id="23c23">
                     <constraints/>
                   </hspacer>
+                  <component id="d7ce8" class="javax.swing.JCheckBox" binding="cbInvertYAxis">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="Invert Y"/>
+                      <contentAreaFilled value="false"/>
+                      <label value="Invert Y"/>
+                      <text value="Invert Y"/>
+                    </properties>
+                  </component>
+                  <hspacer id="83356">
+                    <constraints/>
+                  </hspacer>
                   <component id="af8e8" class="javax.swing.JLabel" binding="lblGunLightType">
                     <constraints/>
                     <properties>
-                      <text value="Light Type"/>
+                      <text value="Lite Type"/>
                     </properties>
                   </component>
                   <component id="d19e5" class="javax.swing.JComboBox" binding="cbGunLightType">
@@ -276,8 +290,27 @@
                   <component id="d18cc" class="javax.swing.JCheckBox" binding="cbRecoilToggle">
                     <constraints/>
                     <properties>
-                      <text value="Recoil Cutoff Is Toggle"/>
+                      <actionCommand value="Recoil Btn Toggles"/>
+                      <label value="Recoil Btn Toggles"/>
+                      <text value="Recoil Btn Toggles"/>
                       <toolTipText value="Checked if recoil control is an on/off switch. Unchecked for a momentary/push button."/>
+                    </properties>
+                  </component>
+                  <hspacer id="35144">
+                    <constraints/>
+                  </hspacer>
+                  <component id="16791" class="javax.swing.JLabel" binding="lblCoilCount">
+                    <constraints/>
+                    <properties>
+                      <text value="Coils"/>
+                    </properties>
+                  </component>
+                  <component id="951b6" class="javax.swing.JSpinner" binding="spCoils">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="55" height="34"/>
+                      <minimumSize width="55" height="34"/>
+                      <preferredSize width="55" height="34"/>
                     </properties>
                   </component>
                 </children>

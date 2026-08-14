@@ -22,7 +22,8 @@ public class Device {
     public static final byte CMD_SET_UNIQUE_ID = 6;
     public static final byte CMD_SET_PLAYER_NUMBER = 11;
     public static final byte CMD_SET_RECOIL_STRENGTH = 12;
-    public static final byte CMD_SET_INVERT_AXIS = 13;
+    public static final byte CMD_SET_INVERT_X_AXIS = 13;
+    public static final byte CMD_SET_INVERT_Y_AXIS = 14;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
@@ -30,12 +31,14 @@ public class Device {
     public static final byte CMD_SET_GUN_LIGHT_TYPE = 20;
     public static final byte CMD_SET_RECOIL_SWITCH_TYPE = 21;
     public static final byte CMD_SET_BUTTON_ACTION = 22;
+    public static final byte CMD_SET_COIL_COUNT = 23;
     public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId!";
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
     public static final int GUN_LIGHT_TYPE_NONE = 0;
     public static final int GUN_LIGHT_TYPE_SINGLE = 1;
     public static final int GUN_LIGHT_TYPE_RGB = 2;
     public static final int GUN_LIGHT_TYPE_ALWAYS = 3;
+    public static final int GUN_LIGHT_TYPE_ADDRESSABLE_RGB = 4;
     public static final int ESP32_VID = 0x303A;
     public static final int ESP32_PID = 0x8234;
     public static final int ESP32_JTAG_PID = 0x1001;
@@ -104,8 +107,12 @@ public class Device {
         return sendCommand(CMD_SET_AUTO_RECOIL, state);
     }
 
-    public boolean setInvertAxis(boolean state) {
-        return sendCommand(CMD_SET_INVERT_AXIS, state);
+    public boolean setInvertXAxis(boolean state) {
+        return sendCommand(CMD_SET_INVERT_X_AXIS, state);
+    }
+
+    public boolean setInvertYAxis(boolean state) {
+        return sendCommand(CMD_SET_INVERT_Y_AXIS, state);
     }
 
     public synchronized boolean setAxisLimits(short xMinValue, short xMaxValue, short yMinValue, short yMaxValue) {
@@ -126,6 +133,10 @@ public class Device {
 
     public synchronized boolean setPlayerNumber(short number) {
         return sendCommand(CMD_SET_PLAYER_NUMBER, number);
+    }
+
+    public synchronized boolean setCoilCount(short number) {
+        return sendCommand(CMD_SET_COIL_COUNT, number);
     }
 
     public synchronized boolean setUniqueId(short id) {

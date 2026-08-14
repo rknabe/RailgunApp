@@ -15,7 +15,8 @@ public final class SettingsDataReport extends DataReport {
     private final short playerNumber;
     private final int recoilStrength;
     private final boolean useDisplay;
-    private final boolean invertAxis;
+    private final boolean invertXAxis;
+    private final boolean invertYAxis;
     private final int gunLightType;
     private final boolean recoilSwitchIsToggle;
     private final ButtonAction button6Action;
@@ -59,9 +60,9 @@ public final class SettingsDataReport extends DataReport {
         autoRecoil = buffer.get() > 0;
         useDisplay = buffer.get() > 0;
         if (buffer.hasRemaining()) {
-            invertAxis = buffer.get() > 0;
+            invertXAxis = buffer.get() > 0;
         } else {
-            invertAxis = false;
+            invertXAxis = false;
         }
         if (buffer.hasRemaining()) {
             recoilSwitchIsToggle = buffer.get() > 0;
@@ -78,13 +79,19 @@ public final class SettingsDataReport extends DataReport {
             button7Action = ButtonAction.from(buffer.get());
             button8Action = ButtonAction.from(buffer.get());
             button9Action = ButtonAction.from(buffer.get());
-            coilCount = buffer.getShort();
+            coilCount = buffer.get();
+
         } else {
             button6Action = ButtonAction.ESCAPE;
             button7Action = ButtonAction.SHUTDOWN;
             button8Action = ButtonAction.RECOIL_TOGGLE;
             button9Action = ButtonAction.PAUSE;
             coilCount = 1;
+        }
+        if (buffer.hasRemaining()) {
+            invertYAxis = buffer.getShort() > 0;
+        } else {
+            invertYAxis = false;
         }
     }
 
@@ -136,8 +143,12 @@ public final class SettingsDataReport extends DataReport {
         return recoilStrength;
     }
 
-    public boolean isInvertAxis() {
-        return invertAxis;
+    public boolean isInvertXAxis() {
+        return invertXAxis;
+    }
+
+    public boolean isInvertYAxis() {
+        return invertYAxis;
     }
 
     public int getGunLightType() {

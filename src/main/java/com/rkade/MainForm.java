@@ -43,10 +43,13 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JRadioButton rbFull;
     private JRadioButton rbMed;
     private JButton btnUpdate;
-    private JCheckBox cbInvertAxis;
+    private JCheckBox cbInvertXAxis;
     private JLabel lblGunLightType;
     private JComboBox<String> cbGunLightType;
     private JCheckBox cbRecoilToggle;
+    private JLabel lblCoilCount;
+    private JSpinner spCoils;
+    private JCheckBox cbInvertYAxis;
     private Device device = null;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
@@ -61,8 +64,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil, spAutoTriggerSpeed,
-                spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate, cbInvertAxis, cbGunLightType,
-                cbRecoilToggle, lblRecoilStrength, lblAutoTrigger, lblTriggerHold, lblPlayerNum, lblGunLightType);
+                spTriggerHold, deviceList, btnConnect, spPlayerNum, rbFull, rbMed, btnUpdate, cbInvertXAxis, cbGunLightType,
+                cbRecoilToggle, lblRecoilStrength, lblAutoTrigger, lblTriggerHold, lblPlayerNum, lblGunLightType,
+                lblCoilCount, spCoils, cbInvertYAxis);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -88,6 +92,14 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         playerNumFormatter.setCommitsOnValidEdit(true);
         spPlayerNum.setEditor(playerNumEditor);
 
+        SpinnerNumberModel coilsNumModel = new SpinnerNumberModel(1, 1, 2, 1);
+        spCoils.setModel(coilsNumModel);
+        JSpinner.NumberEditor coilsNumEditor = new JSpinner.NumberEditor(spCoils, "#");
+        JFormattedTextField coilsNumField = coilsNumEditor.getTextField();
+        DefaultFormatter coilsNumFormatter = (DefaultFormatter) coilsNumField.getFormatter();
+        coilsNumFormatter.setCommitsOnValidEdit(true);
+        spCoils.setEditor(coilsNumEditor);
+
         ButtonGroup recoilStrengthGroup = new ButtonGroup();
         recoilStrengthGroup.add(rbFull);
         recoilStrengthGroup.add(rbMed);
@@ -98,6 +110,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         cbGunLightType.addItem("Single");
         cbGunLightType.addItem("RGB");
         cbGunLightType.addItem("AlwaysOn");
+        cbGunLightType.addItem("ARGB");
 
         axisPanelParent.add(axisPanel);
         setupControlListener();
@@ -163,8 +176,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 return device.setGunLightType(cbGunLightType.getSelectedIndex());
             } else if (e.getActionCommand().equals(cbRecoilToggle.getActionCommand())) {
                 return device.setRecoilSwitchIsToggle(cbRecoilToggle.isSelected());
-            } else if (e.getActionCommand().equals(cbInvertAxis.getActionCommand())) {
-                return device.setInvertAxis(cbInvertAxis.isSelected());
+            } else if (e.getActionCommand().equals(cbInvertXAxis.getActionCommand())) {
+                return device.setInvertXAxis(cbInvertXAxis.isSelected());
+            } else if (e.getActionCommand().equals(cbInvertYAxis.getActionCommand())) {
+                return device.setInvertYAxis(cbInvertYAxis.isSelected());
             } else if (e.getActionCommand().equals(rbFull.getActionCommand()) || e.getActionCommand().equals(rbMed.getActionCommand())) {
                 return device.setRecoilStrength(rbFull.isSelected() ? 255 : 200);
             } else if (e.getActionCommand().equals(btnUpdate.getActionCommand())) {
@@ -228,6 +243,15 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 short newValue = ival.shortValue();
                 if (lastSettings == null || newValue != lastSettings.getPlayerNumber()) {
                     device.setPlayerNumber(ival.shortValue());
+                }
+            } else if (e.getSource() == spCoils) {
+                Number ival = (Number) spCoils.getValue();
+                if (ival == null) {
+                    ival = 1;
+                }
+                short newValue = ival.shortValue();
+                if (lastSettings == null || newValue != lastSettings.getCoilCount()) {
+                    device.setCoilCount(ival.shortValue());
                 }
             }
         }
@@ -296,10 +320,12 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                         axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
                         axisPanel.setYAxisMaximum(settings.getYAxisMaximum());
                         cbAutoRecoil.setSelected(settings.isAutoRecoil());
-                        cbInvertAxis.setSelected(settings.isInvertAxis());
+                        cbInvertXAxis.setSelected(settings.isInvertXAxis());
+                        cbInvertYAxis.setSelected(settings.isInvertYAxis());
                         spAutoTriggerSpeed.getModel().setValue(settings.getTriggerRepeatDelay());
                         spTriggerHold.getModel().setValue(settings.getTriggerHoldTime());
                         spPlayerNum.getModel().setValue(settings.getPlayerNumber());
+                        spCoils.getModel().setValue(settings.getCoilCount());
                         if (settings.getRecoilStrength() < 255) {
                             rbMed.setSelected(true);
                         } else {
@@ -351,6 +377,15 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 short newValue = ival.shortValue();
                 if (lastSettings == null || newValue != lastSettings.getPlayerNumber()) {
                     status = device.setPlayerNumber(ival.shortValue());
+                }
+            } else if (e.getSource() == spCoils) {
+                Number ival = (Number) spCoils.getValue();
+                if (ival == null) {
+                    ival = 1;
+                }
+                short newValue = ival.shortValue();
+                if (lastSettings == null || newValue != lastSettings.getCoilCount()) {
+                    status = device.setCoilCount(ival.shortValue());
                 }
             }
             if (!status) {
