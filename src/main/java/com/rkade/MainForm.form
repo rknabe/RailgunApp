@@ -145,9 +145,9 @@
                   <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
                     <constraints/>
                     <properties>
-                      <maximumSize width="85" height="34"/>
-                      <minimumSize width="85" height="34"/>
-                      <preferredSize width="85" height="34"/>
+                      <maximumSize width="91" height="34"/>
+                      <minimumSize width="91" height="34"/>
+                      <preferredSize width="91" height="34"/>
                       <text value="Calibrate"/>
                     </properties>
                   </component>
@@ -223,12 +223,16 @@
                       <preferredSize width="55" height="34"/>
                     </properties>
                   </component>
+                  <hspacer id="84a79">
+                    <constraints/>
+                  </hspacer>
                   <hspacer id="bb6ee">
                     <constraints/>
                   </hspacer>
                   <component id="bc08c" class="javax.swing.JLabel" binding="lblRecoilStrength">
                     <constraints/>
                     <properties>
+                      <labelFor value=""/>
                       <text value="Recoil:"/>
                     </properties>
                   </component>

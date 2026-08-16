@@ -347,13 +347,15 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                         if (settings.getGunLightType() != cbGunLightType.getSelectedIndex()) {
                             cbGunLightType.setSelectedIndex(settings.getGunLightType());
                         }
-                        if (settings.getBarrelLtColor().getCode()!= cbBarrelLtColor.getSelectedIndex()) {
+                        if (settings.getBarrelLtColor().getCode() != cbBarrelLtColor.getSelectedIndex()) {
                             cbBarrelLtColor.setSelectedIndex(settings.getBarrelLtColor().getCode());
                         }
                         if (settings.isRecoilSwitchIsToggle() != cbRecoilToggle.isSelected()) {
                             cbRecoilToggle.setSelected(settings.isRecoilSwitchIsToggle());
                         }
-                        cbBarrelLtColor.setEnabled(cbGunLightType.getSelectedIndex() == 5);
+                        cbBarrelLtColor.setEnabled(cbGunLightType.getSelectedIndex() == 1 ||
+                                cbGunLightType.getSelectedIndex() == 3 ||
+                                cbGunLightType.getSelectedIndex() == 5);
                         buttonsPanel.deviceUpdated(device, status, settings);
                     }
                     case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
